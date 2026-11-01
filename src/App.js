@@ -243,25 +243,32 @@ function App() {
     };
     // Capacitor Android system back button integration
     useEffect(() => {
-        let listener = null;
+        let listenerHandle = null;
+        let isMounted = true;
         import('@capacitor/app')
-            .then(({ App: CapApp }) => {
-            listener = CapApp.addListener('backButton', () => {
-                if (currentTab || isDrawerOpen || showSearch || showSignInPage) {
-                    handleCloseModal();
-                    setIsDrawerOpen(false);
-                    setShowSearch(false);
-                    setShowSignInPage(false);
+            .then(async ({ App: CapApp }) => {
+                const handle = await CapApp.addListener('backButton', () => {
+                    if (currentTab || isDrawerOpen || showSearch || showSignInPage) {
+                        handleCloseModal();
+                        setIsDrawerOpen(false);
+                        setShowSearch(false);
+                        setShowSignInPage(false);
+                    }
+                    else {
+                        CapApp.exitApp();
+                    }
+                });
+                if (isMounted) {
+                    listenerHandle = handle;
+                } else {
+                    handle?.remove?.();
                 }
-                else {
-                    CapApp.exitApp();
-                }
-            });
-        })
+            })
             .catch(() => { });
         return () => {
-            if (listener && typeof listener.remove === 'function') {
-                listener.remove();
+            isMounted = false;
+            if (listenerHandle && typeof listenerHandle.remove === 'function') {
+                listenerHandle.remove();
             }
         };
     }, [currentTab, isDrawerOpen, showSearch, showSignInPage]);
