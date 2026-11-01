@@ -431,3 +431,80 @@ html {
   color: #0052cc !important;
   transform: translateY(-1px);
 }
+
+/* ── 13. EXPLORESCAPE & COSMIC AUTH SLIDER ANIMATIONS ── */
+.explorescape-nav-auth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.explorescape-nav-auth-btn.signin {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.explorescape-nav-auth-btn.signin:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+
+.explorescape-nav-auth-btn.signup {
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+}
+
+.explorescape-nav-auth-btn.signup:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.6);
+}
+
+/* Responsive Cosmic Card */
+@media (max-width: 860px) {
+  .cosmic-login-card {
+    grid-template-columns: 1fr !important;
+    max-width: 480px !important;
+  }
+  .cosmic-login-left {
+    display: none !important;
+  }
+}
+
+/* ── 14. HOLOGRAPHIC SMART PASS & LASER SCANLINE ── */
+.holo-passport-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.holo-passport-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 30px 60px rgba(10, 15, 29, 0.45), 0 0 35px rgba(56, 189, 248, 0.3) !important;
+}
+
+@keyframes scanlineLaser {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+.qr-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  box-shadow: 0 0 8px #38bdf8;
+  animation: scanlineLaser 2.4s ease-in-out infinite;
+}
+
