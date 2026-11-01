@@ -105,30 +105,85 @@ export const DesktopLoginPage = ({ onClose, onLoginSuccess, initialIsSignUp = fa
                 color: '#ffffff'
             },
             children: [
-                // ── HIGH-RESOLUTION SERENE PURPLE MOUNTAIN LANDSCAPE BACKGROUND ──
+                // ── PURPLE MOUNTAIN PARALLAX BACKGROUND LAYERS (Exact match to reference image) ──
                 _jsx("img", {
-                    src: loginBg,
-                    alt: "Serene Purple Mountain Landscape",
+                    src: bac4,
+                    alt: "Sky",
                     style: {
                         position: 'absolute',
-                        inset: 0,
+                        top: 0,
+                        left: 0,
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        objectPosition: 'center',
+                        filter: 'hue-rotate(250deg) saturate(1.4) brightness(0.9)',
+                        opacity: 0.9,
                         zIndex: 1
                     }
                 }),
+                _jsx("img", {
+                    src: bac3,
+                    alt: "Distant Ridge",
+                    style: {
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        filter: 'hue-rotate(250deg) saturate(1.5) brightness(0.85)',
+                        opacity: 0.95,
+                        zIndex: 2
+                    }
+                }),
+                _jsx("img", {
+                    src: bac2_2,
+                    alt: "Midground Mountains",
+                    style: {
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        filter: 'hue-rotate(250deg) saturate(1.6) brightness(0.75)',
+                        opacity: 0.95,
+                        zIndex: 3
+                    }
+                }),
+                _jsx("img", {
+                    src: bac1,
+                    alt: "Foreground Silhouette",
+                    style: {
+                        position: 'absolute',
+                        bottom: '-5%',
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        filter: 'hue-rotate(250deg) saturate(1.7) brightness(0.55)',
+                        opacity: 1,
+                        zIndex: 4
+                    }
+                }),
 
-                // Subtle atmospheric depth overlay
+                // Atmospheric Violet Gradient Overlay
                 _jsx("div", {
                     style: {
                         position: 'absolute',
                         inset: 0,
-                        background: 'radial-gradient(circle at 50% 50%, rgba(30, 27, 75, 0.1) 0%, rgba(15, 23, 42, 0.35) 100%)',
-                        zIndex: 2,
+                        background: 'radial-gradient(ellipse at 50% 40%, rgba(147, 51, 234, 0.25) 0%, rgba(76, 29, 149, 0.45) 50%, rgba(15, 23, 42, 0.65) 100%)',
+                        zIndex: 5,
                         pointerEvents: 'none'
                     }
+                }),
+
+                // Flying Birds in Sky (SVG matching reference image)
+                _jsxs("svg", {
+                    style: { position: 'absolute', top: '14%', right: '28%', zIndex: 6, opacity: 0.75, width: 90, height: 40, pointerEvents: 'none' },
+                    viewBox: "0 0 100 40",
+                    fill: "rgba(30, 27, 75, 0.85)",
+                    children: [
+                        _jsx("path", { d: "M10 20 Q 20 10, 30 20 Q 40 10, 50 20 Q 40 16, 30 16 Q 20 16, 10 20 Z" }),
+                        _jsx("path", { d: "M55 10 Q 62 3, 70 10 Q 77 3, 85 10 Q 77 7, 70 7 Q 62 7, 55 10 Z" })
+                    ]
                 }),
 
                 // Close Button to return to landing page
