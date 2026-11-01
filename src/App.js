@@ -6,7 +6,7 @@ import { supabase } from './services/supabaseClient';
 import { dbService } from './services/db';
 import appLogo from './assets/app-logo.png';
 import { APP_CATEGORIES } from './routes/appRoutes';
-import { ProfileDocs, AttendanceTracker, NptelTracker, AcademicsTracker, CareerHub, AcademicCalendar, AIChatbot, SignInPage, StudentDetailsCard, Timetable, RequestLetters, LabSeatFinder, GpaCalculator, AnnouncementBanner, DesktopLandingPage, DesktopLoginPage, DesktopSidebar, DesktopVisionaDashboard, DesktopPageWrapper, DesktopNavbar, MobileLandingPage, PuzzleGames, StudentManager, TaskList, BugReport, LoadingScreen } from './components';
+import { ProfileDocs, AttendanceTracker, NptelTracker, AcademicsTracker, CareerHub, AcademicCalendar, AIChatbot, SignInPage, StudentDetailsCard, Timetable, RequestLetters, LabSeatFinder, GpaCalculator, AnnouncementBanner, DesktopLandingPage, DesktopLoginPage, DesktopSidebar, DesktopVisionaDashboard, DesktopPageWrapper, DesktopNavbar, DesktopCareerHub, DesktopAttendance, DesktopTimetable, DesktopRequestLetters, DesktopAcademics, DesktopLabFinder, DesktopProfileDocs, DesktopStudentManager, DesktopAnnouncements, DesktopCalendarCourses, DesktopNptelTracker, DesktopPuzzleGames, MobileLandingPage, PuzzleGames, StudentManager, TaskList, BugReport, LoadingScreen } from './components';
 import { Zap, Menu, X, Search, Bell, User, LogOut, ChevronRight, BookOpen, Calendar, GraduationCap, Award, FileText, UserCheck, Inbox, Map, Phone, Sparkles, Home, Gamepad2, CheckCircle2, Plus, Trash2, Pencil, RefreshCw, Compass, Bot, Clock, Layers, ShieldCheck, Bug, Shield } from 'lucide-react';
 import './App.css';
 
@@ -816,6 +816,42 @@ function App() {
                     })
                 }))) : (() => {
                     const tabMeta = getTabMetadata(currentTab);
+                    if (isDesktop) {
+                        const desktopTabBody = [
+                            currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }),
+                            currentTab === 'career' && _jsx(DesktopCareerHub, {}),
+                            currentTab === 'attendance' && _jsx(DesktopAttendance, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai R', isAdmin: isAdmin }),
+                            currentTab === 'timetable' && _jsx(DesktopTimetable, { isAdmin: isAdmin, semester: 3 }),
+                            currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }),
+                            currentTab === 'request-letters' && _jsx(DesktopRequestLetters, { currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai R', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }),
+                            currentTab === 'academics' && _jsx(DesktopAcademics, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin }),
+                            currentTab === 'lab-finder' && _jsx(DesktopLabFinder, { rollNo: currentUser?.rollNo || '71812503104' }),
+                            currentTab === 'profile-details' && _jsx(DesktopProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }),
+                            currentTab === 'profile' && _jsx(DesktopProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, mode: "documents", currentUser: currentUser }),
+                            currentTab === 'certificates' && _jsx(DesktopProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, mode: "certificates", currentUser: currentUser }),
+                            currentTab === 'student-manager' && _jsx(DesktopStudentManager, { isAdmin: isAdmin, currentUser: currentUser }),
+                            currentTab === 'announcements' && _jsx(DesktopAnnouncements, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }),
+                            currentTab === 'courses' && _jsx(DesktopCalendarCourses, { initialView: "courses" }),
+                            currentTab === 'calendar' && _jsx(DesktopCalendarCourses, { initialView: "calendar" }),
+                            currentTab === 'nptel' && _jsx(DesktopNptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin }),
+                            currentTab === 'puzzle-games' && _jsx(DesktopPuzzleGames, {}),
+                            currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }),
+                            currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })),
+                            currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }),
+                            currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }),
+                            currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }),
+                            currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin })
+                        ];
+                        return _jsx(DesktopPageWrapper, {
+                            title: tabMeta.title,
+                            category: tabMeta.category,
+                            subtitle: tabMeta.subtitle,
+                            icon: tabMeta.icon,
+                            onBack: handleCloseModal,
+                            children: desktopTabBody
+                        });
+                    }
+
                     const tabBody = [currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }), currentTab === 'announcements' && (_jsx("div", { style: { background: 'var(--bg-primary)', borderRadius: 16, border: '1px solid var(--card-border)', padding: 16 }, children: _jsx(AnnouncementBanner, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }) })), currentTab === 'profile-details' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }), currentTab === 'profile' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "documents" }), currentTab === 'certificates' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "certificates" }), currentTab === 'request-letters' && _jsx(RequestLetters, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }), currentTab === 'lab-finder' && _jsx(LabSeatFinder, { onBack: handleCloseModal, rollNo: currentUser?.rollNo || '71812503104' }), currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }), currentTab === 'attendance' && _jsx(AttendanceTracker, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'nptel' && _js
 
                         (NptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'academics' && _jsx(AcademicsTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'career' && _jsx(CareerHub, { onBack: handleCloseModal, isAdmin: isAdmin }), currentTab === 'courses' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "courses", initialEditMode: academicInitEdit }), currentTab === 'calendar' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "calendar", initialEditMode: academicInitEdit }), currentTab === 'timetable' && _jsx(Timetable, { onBack: handleCloseModal, isAdmin: isAdmin, semester: 3 }), currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }), currentTab === 'puzzle-games' && _jsx(PuzzleGames, { onBack: handleCloseModal }), currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })), currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'student-manager' && _jsx(StudentManager, { onBack: handleCloseModal, isAdmin: isAdmin, currentUser: currentUser }), currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin }), !['ai', 'announcements', 'profile-details', 'profile', 'certificates', 'request-letters', 'lab-finder', 'cgpa-calc', 'attendance', 'nptel', 'academics', 'career', 'courses', 'calendar', 'timetable', 'tasks', 'puzzle-games', 'suggestion', 'campus-map', 'college-rules', 'faculty', 'student-manager', 'bug-report'].includes(currentTab) && (_jsxs("div", {
@@ -863,16 +899,7 @@ function App() {
                             ]
                         }))
                     ];
-                    return isDesktop ? (
-                        _jsx(DesktopPageWrapper, {
-                            title: tabMeta.title,
-                            category: tabMeta.category,
-                            subtitle: tabMeta.subtitle,
-                            icon: tabMeta.icon,
-                            onBack: handleCloseModal,
-                            children: tabBody
-                        })
-                    ) : (
+                    return (
                         _jsx("div", { className: "dedicated-page-view page-slide-enter", children: _jsx("div", { className: "dedicated-page-body", children: tabBody }) })
                     );
                 })()
