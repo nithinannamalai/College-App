@@ -35,3 +35,4 @@ export { DesktopLoginPage } from './desktop/DesktopLoginPage.js';
 export { DesktopSidebar } from './desktop/DesktopSidebar.js';
 export { DesktopVisionaDashboard } from './desktop/DesktopVisionaDashboard.js';
 export { DesktopPageWrapper } from './desktop/DesktopPageWrapper.js';
+export { DesktopNavbar } from './desktop/DesktopNavbar.js';

@@ -5,7 +5,8 @@ import {
     Clock, Compass, Layers, ShieldCheck, Sparkles, TrendingUp, 
     Calendar, CheckCircle2, AlertCircle, Plus, ExternalLink, Hash, 
     GraduationCap, Bell, MapPin, Gamepad2, Bug, Shield, User,
-    Check, ChevronRight, Zap, RefreshCw, Mail, Phone, Cpu
+    Check, ChevronRight, Zap, RefreshCw, Mail, Phone, Cpu, Filter,
+    CheckSquare, Flag, ArrowUpRight, HardDrive, BarChart3
 } from 'lucide-react';
 import { dbService } from '../../services/db';
 
@@ -14,6 +15,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
     const [attendanceLogs, setAttendanceLogs] = useState([]);
     const [odRequests, setOdRequests] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
     const userName = currentUser?.name || 'Nithin Annamalai R';
     const rollNo = currentUser?.rollNo || '71812503104';
@@ -59,22 +61,45 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
         { period: 7, time: '03:20 - 04:15', code: 'EE8421', name: 'Technical Seminar & Circuit Simulation', hall: 'Comp Lab', faculty: 'Prof. R. Anand', status: 'upcoming' }
     ];
 
-    // Core Academic Modules
-    const academicModules = [
-        { key: 'attendance', title: 'Attendance Radar', icon: _jsx(UserCheck, { size: 20 }), color: '#059669', bg: '#ecfdf5', desc: 'Hourly tracking & buffer calculation' },
-        { key: 'academics', title: 'Curriculum & Syllabi', icon: _jsx(BookOpen, { size: 20 }), color: '#0284c7', bg: '#eff6ff', desc: 'Course materials, notes & question banks' },
-        { key: 'timetable', title: 'Class Timetable', icon: _jsx(Clock, { size: 20 }), color: '#d97706', bg: '#fffbeb', desc: 'Daily period schedule & lab rotations' },
-        { key: 'cgpa-calc', title: 'Target GPA Simulator', icon: _jsx(Award, { size: 20 }), color: '#ea580c', bg: '#fff7ed', desc: 'Arrear-free semester GPA planning' },
-        { key: 'request-letters', title: 'OD & Request Letters', icon: _jsx(FileText, { size: 20 }), color: '#0891b2', bg: '#ecfeff', desc: 'On-duty applications & Bonafide PDFs' },
-        { key: 'lab-finder', title: 'Lab Seat Finder', icon: _jsx(Compass, { size: 20 }), color: '#4f46e5', bg: '#eef2ff', desc: 'Live computer & workstation availability' },
-        { key: 'career', title: 'Career Roadmaps & GATE', icon: _jsx(Sparkles, { size: 20 }), color: '#db2777', bg: '#fdf2f8', desc: 'Core electrical & IT recruitment prep' },
-        { key: 'ai', title: '24/7 AI Neural Tutor', icon: _jsx(Bot, { size: 20 }), color: '#7c3aed', bg: '#f5f3ff', desc: 'Gemini-powered circuit & theory tutor' },
-        { key: 'puzzle-games', title: 'Mind & Brain Games', icon: _jsx(Gamepad2, { size: 20 }), color: '#9333ea', bg: '#faf5ff', desc: 'Cognitive circuit & logic puzzles' },
+    // Weekly attendance trend data
+    const weeklyAttendance = [
+        { day: 'Mon', status: 'Full', present: 7, total: 7, color: '#10b981' },
+        { day: 'Tue', status: 'Full', present: 7, total: 7, color: '#10b981' },
+        { day: 'Wed', status: 'OD (Symposium)', present: 7, total: 7, color: '#0284c7' },
+        { day: 'Thu', status: 'Full', present: 6, total: 7, color: '#f59e0b' },
+        { day: 'Fri', status: 'Ongoing', present: 4, total: 7, color: '#6366f1' },
     ];
 
-    const filteredModules = searchQuery.trim()
-        ? academicModules.filter(m => m.title.toLowerCase().includes(searchQuery.toLowerCase()) || m.desc.toLowerCase().includes(searchQuery.toLowerCase()))
-        : academicModules;
+    // Department Faculty Consultation Slots
+    const facultyConsultations = [
+        { name: 'Dr. C. Ezhilarasi', title: 'Assoc. Prof & Mentor', subject: 'Power Electronics', cabin: 'Room 214', slot: 'Today · 03:30 - 04:30 PM', available: true },
+        { name: 'Dr. K. Ravichandran', title: 'Professor', subject: 'Transmission & Distribution', cabin: 'Room 210', slot: 'Tomorrow · 10:30 - 11:30 AM', available: true },
+        { name: 'Prof. M. Suresh', title: 'Asst. Professor', subject: 'Microprocessors', cabin: 'Room 218', slot: 'Wed · 02:00 - 03:00 PM', available: false },
+    ];
+
+    // Core Academic Modules categorized
+    const allModules = [
+        { key: 'attendance', category: 'academics', title: 'Attendance Radar', icon: _jsx(UserCheck, { size: 20 }), color: '#059669', bg: '#ecfdf5', desc: 'Hourly tracking & buffer calculation' },
+        { key: 'academics', category: 'academics', title: 'Curriculum & Syllabi', icon: _jsx(BookOpen, { size: 20 }), color: '#0284c7', bg: '#eff6ff', desc: 'Course outcomes, lecture notes & question banks' },
+        { key: 'timetable', category: 'academics', title: 'Class Timetable', icon: _jsx(Clock, { size: 20 }), color: '#d97706', bg: '#fffbeb', desc: 'Daily period grid & lab rotations' },
+        { key: 'cgpa-calc', category: 'academics', title: 'Target GPA Simulator', icon: _jsx(Award, { size: 20 }), color: '#ea580c', bg: '#fff7ed', desc: 'Calculate and simulate semester CGPA' },
+        { key: 'request-letters', category: 'services', title: 'OD & Request Letters', icon: _jsx(FileText, { size: 20 }), color: '#0891b2', bg: '#ecfeff', desc: 'Instant PDF export & approval tracking' },
+        { key: 'lab-finder', category: 'labs', title: 'Lab Seat Finder', icon: _jsx(Compass, { size: 20 }), color: '#4f46e5', bg: '#eef2ff', desc: 'Real-time PC workstation availability' },
+        { key: 'career', category: 'career', title: 'Career Roadmaps & GATE', icon: _jsx(Sparkles, { size: 20 }), color: '#db2777', bg: '#fdf2f8', desc: 'Core electrical & IT recruitment prep' },
+        { key: 'ai', category: 'ai', title: '24/7 AI Neural Tutor', icon: _jsx(Bot, { size: 20 }), color: '#7c3aed', bg: '#f5f3ff', desc: 'Gemini-powered circuit & theory mentor' },
+        { key: 'puzzle-games', category: 'ai', title: 'Mind & Brain Games', icon: _jsx(Gamepad2, { size: 20 }), color: '#9333ea', bg: '#faf5ff', desc: 'Cognitive circuit & memory puzzles' },
+        { key: 'college-rules', category: 'services', title: 'College Regulations', icon: _jsx(Shield, { size: 20 }), color: '#475569', bg: '#f1f5f9', desc: 'Autonomous code of conduct & dress code' },
+        { key: 'campus-map', category: 'services', title: 'Interactive Campus Map', icon: _jsx(MapPin, { size: 20 }), color: '#16a34a', bg: '#f0fdf4', desc: '3D navigation for blocks & labs' },
+        { key: 'bug-report', category: 'services', title: 'Report an Issue', icon: _jsx(Bug, { size: 20 }), color: '#dc2626', bg: '#fef2f2', desc: 'Submit portal bugs & IT tickets' },
+    ];
+
+    const filteredModules = allModules.filter(m => {
+        const matchesCategory = selectedCategory === 'all' || m.category === selectedCategory;
+        const matchesSearch = !searchQuery.trim() || 
+            m.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+            m.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     // Greeting
     const hour = new Date().getHours();
@@ -84,175 +109,22 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
         _jsxs("div", {
             className: "desktop-visionos-dashboard",
             style: {
-                padding: '28px 40px 60px',
+                padding: '24px 36px 60px',
                 maxWidth: 1440,
                 margin: '0 auto',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 24,
+                gap: 22,
                 boxSizing: 'border-box',
                 animation: 'pageSlideUpFluid 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'
             },
             children: [
-                // ── 1. TOP HEADER & QUICK ACTION BAR ──
+                // ── 1. HERO IDENTITY & LIVE STATUS BANNER ──
                 _jsxs("div", {
                     style: {
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap',
-                        gap: 16
-                    },
-                    children: [
-                        _jsxs("div", {
-                            children: [
-                                _jsxs("div", {
-                                    style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 },
-                                    children: [
-                                        _jsx("span", {
-                                            style: {
-                                                fontSize: 11,
-                                                fontWeight: 900,
-                                                color: '#0284c7',
-                                                background: 'rgba(2, 132, 199, 0.1)',
-                                                padding: '3px 10px',
-                                                borderRadius: 99,
-                                                border: '1px solid rgba(2, 132, 199, 0.25)',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: 0.5
-                                            },
-                                            children: isAdmin ? '👨‍🏫 Faculty Portal' : `🎓 ${className} · Roll: ${rollNo}`
-                                        }),
-                                        _jsxs("div", {
-                                            style: { display: 'flex', alignItems: 'center', gap: 6 },
-                                            children: [
-                                                _jsx("span", {
-                                                    style: {
-                                                        width: 8,
-                                                        height: 8,
-                                                        borderRadius: '50%',
-                                                        background: '#10b981',
-                                                        display: 'inline-block',
-                                                        boxShadow: '0 0 10px #10b981'
-                                                    }
-                                                }),
-                                                _jsx("span", {
-                                                    style: { fontSize: 11, fontWeight: 800, color: '#64748b' },
-                                                    children: "Campus Systems Live"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                _jsxs("h1", {
-                                    style: {
-                                        fontSize: 28,
-                                        fontWeight: 950,
-                                        color: '#0f172a',
-                                        margin: 0,
-                                        letterSpacing: -0.6
-                                    },
-                                    children: [
-                                        `${greeting}, `,
-                                        userName
-                                    ]
-                                }),
-                                _jsx("p", {
-                                    style: {
-                                        fontSize: 13,
-                                        color: '#64748b',
-                                        margin: '3px 0 0 0',
-                                        fontWeight: 600
-                                    },
-                                    children: "Sri Ramakrishna Engineering College · Department of Electrical & Electronics Engineering"
-                                })
-                            ]
-                        }),
-
-                        // Search and CTAs
-                        _jsxs("div", {
-                            style: { display: 'flex', alignItems: 'center', gap: 12 },
-                            children: [
-                                _jsxs("div", {
-                                    style: {
-                                        position: 'relative',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        width: 320
-                                    },
-                                    children: [
-                                        _jsx(Search, { size: 16, style: { position: 'absolute', left: 14, color: '#94a3b8' } }),
-                                        _jsx("input", {
-                                            type: "text",
-                                            placeholder: "Search features, notes, syllabi...",
-                                            value: searchQuery,
-                                            onChange: e => setSearchQuery(e.target.value),
-                                            style: {
-                                                width: '100%',
-                                                padding: '10px 14px 10px 40px',
-                                                borderRadius: 99,
-                                                border: '1.5px solid #cbd5e1',
-                                                background: '#ffffff',
-                                                fontSize: 12.5,
-                                                fontWeight: 600,
-                                                color: '#0f172a',
-                                                outline: 'none',
-                                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)',
-                                                transition: 'border-color 0.2s ease'
-                                            }
-                                        })
-                                    ]
-                                }),
-                                _jsxs("button", {
-                                    type: "button",
-                                    onClick: () => onOpenTab('request-letters'),
-                                    style: {
-                                        padding: '10px 18px',
-                                        borderRadius: 99,
-                                        border: 'none',
-                                        background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
-                                        color: '#ffffff',
-                                        fontSize: 12.5,
-                                        fontWeight: 800,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 6,
-                                        cursor: 'pointer',
-                                        boxShadow: '0 4px 14px rgba(2, 132, 199, 0.35)',
-                                        transition: 'all 0.2s ease'
-                                    },
-                                    children: [_jsx(Plus, { size: 14 }), " Apply OD"]
-                                }),
-                                _jsxs("button", {
-                                    type: "button",
-                                    onClick: () => onOpenTab('ai'),
-                                    style: {
-                                        padding: '10px 18px',
-                                        borderRadius: 99,
-                                        border: '1.5px solid rgba(124, 58, 237, 0.3)',
-                                        background: '#faf5ff',
-                                        color: '#7c3aed',
-                                        fontSize: 12.5,
-                                        fontWeight: 800,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 6,
-                                        cursor: 'pointer',
-                                        transition: 'all 0.2s ease'
-                                    },
-                                    children: [_jsx(Bot, { size: 14 }), " AI Tutor"]
-                                })
-                            ]
-                        })
-                    ]
-                }),
-
-                // ── 2. HERO IDENTITY & LIVE STATUS BANNER ──
-                _jsxs("div", {
-                    style: {
-                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0369a1 100%)',
-                        borderRadius: 24,
-                        padding: '24px 30px',
+                        background: 'linear-gradient(135deg, #091e3a 0%, #172554 45%, #1e3a8a 100%)',
+                        borderRadius: 26,
+                        padding: '28px 32px',
                         color: '#ffffff',
                         display: 'flex',
                         alignItems: 'center',
@@ -265,21 +137,21 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                     },
                     children: [
                         _jsxs("div", {
-                            style: { display: 'flex', alignItems: 'center', gap: 18, zIndex: 2 },
+                            style: { display: 'flex', alignItems: 'center', gap: 20, zIndex: 2 },
                             children: [
                                 _jsx("div", {
                                     style: {
-                                        width: 58,
-                                        height: 58,
-                                        borderRadius: '50%',
+                                        width: 64,
+                                        height: 64,
+                                        borderRadius: 20,
                                         background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        fontSize: 22,
+                                        fontSize: 26,
                                         fontWeight: 950,
                                         color: '#ffffff',
-                                        boxShadow: '0 4px 16px rgba(2, 132, 199, 0.4)',
+                                        boxShadow: '0 8px 24px rgba(2, 132, 199, 0.4)',
                                         border: '2px solid rgba(255, 255, 255, 0.4)'
                                     },
                                     children: userName.charAt(0)
@@ -289,28 +161,32 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                         _jsxs("div", {
                                             style: { display: 'flex', alignItems: 'center', gap: 10 },
                                             children: [
-                                                _jsx("h2", {
-                                                    style: { fontSize: 20, fontWeight: 900, margin: 0, color: '#ffffff' },
-                                                    children: userName
+                                                _jsxs("h1", {
+                                                    style: { fontSize: 24, fontWeight: 950, margin: 0, color: '#ffffff', letterSpacing: -0.4 },
+                                                    children: [
+                                                        `${greeting}, `,
+                                                        userName
+                                                    ]
                                                 }),
                                                 _jsx("span", {
                                                     style: {
-                                                        fontSize: 10,
+                                                        fontSize: 10.5,
                                                         fontWeight: 900,
-                                                        background: 'rgba(56, 189, 248, 0.2)',
+                                                        background: 'rgba(56, 189, 248, 0.25)',
                                                         color: '#38bdf8',
-                                                        border: '1px solid rgba(56, 189, 248, 0.4)',
-                                                        padding: '2px 8px',
+                                                        border: '1px solid rgba(56, 189, 248, 0.5)',
+                                                        padding: '3px 10px',
                                                         borderRadius: 99
                                                     },
-                                                    children: "Autonomous Scholar"
+                                                    children: isAdmin ? "Faculty Admin" : "Scholar Distinction"
                                                 })
                                             ]
                                         }),
                                         _jsxs("p", {
-                                            style: { margin: '4px 0 0 0', fontSize: 12.5, color: 'rgba(255, 255, 255, 0.8)', fontWeight: 600 },
+                                            style: { margin: '6px 0 0 0', fontSize: 13, color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600 },
                                             children: [
-                                                `Department of EEE · Semester IV · ${className} · Roll No: ${rollNo}`
+                                                "Sri Ramakrishna Engineering College · Department of EEE · ",
+                                                _jsx("strong", { style: { color: '#ffffff' }, children: `${className} · Roll No: ${rollNo}` })
                                             ]
                                         })
                                     ]
@@ -318,7 +194,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                             ]
                         }),
 
-                        // Fast action pills
+                        // Fast action shortcuts
                         _jsxs("div", {
                             style: { display: 'flex', gap: 10, zIndex: 2, flexWrap: 'wrap' },
                             children: [
@@ -326,64 +202,65 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     type: "button",
                                     onClick: () => onOpenTab('attendance'),
                                     style: {
-                                        padding: '8px 16px',
+                                        padding: '9px 18px',
                                         borderRadius: 99,
-                                        border: '1px solid rgba(255, 255, 255, 0.25)',
-                                        background: 'rgba(255, 255, 255, 0.1)',
+                                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                                        background: 'rgba(255, 255, 255, 0.12)',
                                         color: '#ffffff',
-                                        fontSize: 12,
+                                        fontSize: 12.5,
                                         fontWeight: 800,
                                         cursor: 'pointer',
                                         backdropFilter: 'blur(8px)',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: 6
+                                        gap: 7
                                     },
-                                    children: [_jsx(UserCheck, { size: 14 }), " Attendance Radar"]
+                                    children: [_jsx(UserCheck, { size: 15 }), " Attendance Radar"]
                                 }),
                                 _jsxs("button", {
                                     type: "button",
                                     onClick: () => onOpenTab('timetable'),
                                     style: {
-                                        padding: '8px 16px',
+                                        padding: '9px 18px',
                                         borderRadius: 99,
-                                        border: '1px solid rgba(255, 255, 255, 0.25)',
-                                        background: 'rgba(255, 255, 255, 0.1)',
+                                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                                        background: 'rgba(255, 255, 255, 0.12)',
                                         color: '#ffffff',
-                                        fontSize: 12,
+                                        fontSize: 12.5,
                                         fontWeight: 800,
                                         cursor: 'pointer',
                                         backdropFilter: 'blur(8px)',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: 6
+                                        gap: 7
                                     },
-                                    children: [_jsx(Clock, { size: 14 }), " Period Timetable"]
+                                    children: [_jsx(Clock, { size: 15 }), " Period Timetable"]
                                 }),
                                 _jsxs("button", {
                                     type: "button",
-                                    onClick: () => onOpenTab('profile-details'),
+                                    onClick: () => onOpenTab('request-letters'),
                                     style: {
-                                        padding: '8px 16px',
+                                        padding: '9px 20px',
                                         borderRadius: 99,
                                         border: 'none',
                                         background: '#38bdf8',
-                                        color: '#0f172a',
-                                        fontSize: 12,
+                                        color: '#091e3a',
+                                        fontSize: 12.5,
                                         fontWeight: 900,
                                         cursor: 'pointer',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: 6
+                                        gap: 7,
+                                        boxShadow: '0 4px 14px rgba(56, 189, 248, 0.4)'
                                     },
-                                    children: [_jsx(ShieldCheck, { size: 14 }), " Digital Pass"]
+                                    children: [_jsx(Plus, { size: 15 }), " Instant OD"]
                                 })
                             ]
                         })
                     ]
                 }),
 
-                // ── 3. TOP 4 EXECUTIVE KPI CARDS ──
+                // ── 2. TOP 4 EXECUTIVE KPI CARDS ──
                 _jsxs("div", {
                     style: {
                         display: 'grid',
@@ -410,8 +287,8 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
                                     children: [
                                         _jsx("div", {
-                                            style: { width: 40, height: 40, borderRadius: 12, background: '#eff6ff', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-                                            children: _jsx(UserCheck, { size: 20 })
+                                            style: { width: 42, height: 42, borderRadius: 14, background: '#eff6ff', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+                                            children: _jsx(UserCheck, { size: 22 })
                                         }),
                                         _jsx("span", {
                                             style: { fontSize: 10, fontWeight: 900, background: '#dcfce7', color: '#16a34a', padding: '3px 8px', borderRadius: 99 },
@@ -419,7 +296,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                         })
                                     ]
                                 }),
-                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "Overall Attendance" }),
+                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "Attendance Radar" }),
                                 _jsxs("h2", { style: { fontSize: 32, fontWeight: 950, color: '#0f172a', margin: '4px 0 2px 0', letterSpacing: -1 }, children: [attendancePercentage, "%"] }),
                                 _jsxs("p", { style: { fontSize: 11, color: '#16a34a', margin: 0, fontWeight: 700 }, children: ["✓ ", attendedClasses, " / ", totalClasses, " Classes Attended"] })
                             ]
@@ -444,8 +321,8 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
                                     children: [
                                         _jsx("div", {
-                                            style: { width: 40, height: 40, borderRadius: 12, background: '#f0fdf4', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-                                            children: _jsx(Award, { size: 20 })
+                                            style: { width: 42, height: 42, borderRadius: 14, background: '#f0fdf4', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+                                            children: _jsx(Award, { size: 22 })
                                         }),
                                         _jsx("span", {
                                             style: { fontSize: 10, fontWeight: 900, background: '#eff6ff', color: '#0284c7', padding: '3px 8px', borderRadius: 99 },
@@ -453,7 +330,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                         })
                                     ]
                                 }),
-                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "Current Cumulative CGPA" }),
+                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "Cumulative CGPA" }),
                                 _jsxs("h2", { style: { fontSize: 32, fontWeight: 950, color: '#0f172a', margin: '4px 0 2px 0', letterSpacing: -1 }, children: [currentCgpa, " / 10"] }),
                                 _jsx("p", { style: { fontSize: 11, color: '#0284c7', margin: 0, fontWeight: 700 }, children: "0 Active Arrears · Sem IV Clear" })
                             ]
@@ -478,8 +355,8 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
                                     children: [
                                         _jsx("div", {
-                                            style: { width: 40, height: 40, borderRadius: 12, background: '#fffbeb', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-                                            children: _jsx(FileText, { size: 20 })
+                                            style: { width: 42, height: 42, borderRadius: 14, background: '#fffbeb', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+                                            children: _jsx(FileText, { size: 22 })
                                         }),
                                         _jsx("span", {
                                             style: { fontSize: 10, fontWeight: 900, background: '#fef3c7', color: '#b45309', padding: '3px 8px', borderRadius: 99 },
@@ -487,9 +364,9 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                         })
                                     ]
                                 }),
-                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "On-Duty Approvals" }),
+                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "On-Duty Status" }),
                                 _jsxs("h2", { style: { fontSize: 32, fontWeight: 950, color: '#0f172a', margin: '4px 0 2px 0', letterSpacing: -1 }, children: [approvedODCount, " Approved"] }),
-                                _jsx("p", { style: { fontSize: 11, color: '#d97706', margin: 0, fontWeight: 700 }, children: "1 Request in verification" })
+                                _jsx("p", { style: { fontSize: 11, color: '#d97706', margin: 0, fontWeight: 700 }, children: "1 Pending Verification" })
                             ]
                         }),
 
@@ -512,8 +389,8 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
                                     children: [
                                         _jsx("div", {
-                                            style: { width: 40, height: 40, borderRadius: 12, background: '#faf5ff', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-                                            children: _jsx(Sparkles, { size: 20 })
+                                            style: { width: 42, height: 42, borderRadius: 14, background: '#faf5ff', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+                                            children: _jsx(Sparkles, { size: 22 })
                                         }),
                                         _jsx("span", {
                                             style: { fontSize: 10, fontWeight: 900, background: '#ede9fe', color: '#6d28d9', padding: '3px 8px', borderRadius: 99 },
@@ -521,9 +398,103 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                         })
                                     ]
                                 }),
-                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "NPTEL & Value Added" }),
+                                _jsx("span", { style: { fontSize: 11.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }, children: "NPTEL & Value-Added" }),
                                 _jsxs("h2", { style: { fontSize: 32, fontWeight: 950, color: '#0f172a', margin: '4px 0 2px 0', letterSpacing: -1 }, children: [nptelCount, " Certified"] }),
                                 _jsx("p", { style: { fontSize: 11, color: '#7c3aed', margin: 0, fontWeight: 700 }, children: "Elite + Silver Award Holder" })
+                            ]
+                        })
+                    ]
+                }),
+
+                // ── 3. WEEKLY ATTENDANCE TREND & EXAM COUNTDOWN TICKER ──
+                _jsxs("div", {
+                    style: {
+                        display: 'grid',
+                        gridTemplateColumns: '1.7fr 1fr',
+                        gap: 20
+                    },
+                    children: [
+                        // Weekly Attendance Strip
+                        _jsxs("div", {
+                            style: {
+                                background: '#ffffff',
+                                borderRadius: 20,
+                                border: '1px solid #e2e8f0',
+                                padding: '18px 24px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                flexWrap: 'wrap',
+                                gap: 14,
+                                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.02)'
+                            },
+                            children: [
+                                _jsxs("div", {
+                                    children: [
+                                        _jsxs("h4", { style: { fontSize: 14, fontWeight: 900, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(BarChart3, { size: 16, style: { color: '#0284c7' } }), "This Week's Attendance Velocity"] }),
+                                        _jsx("p", { style: { fontSize: 11.5, color: '#64748b', margin: '2px 0 0 0' }, children: "Calculated across Periods 1 to 7 daily" })
+                                    ]
+                                }),
+                                _jsx("div", {
+                                    style: { display: 'flex', gap: 12 },
+                                    children: weeklyAttendance.map(d => (
+                                        _jsxs("div", {
+                                            style: {
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                gap: 4,
+                                                padding: '8px 12px',
+                                                borderRadius: 12,
+                                                background: '#f8fafc',
+                                                border: '1px solid #e2e8f0',
+                                                minWidth: 54
+                                            },
+                                            children: [
+                                                _jsx("span", { style: { fontSize: 11, fontWeight: 800, color: '#64748b' }, children: d.day }),
+                                                _jsx("span", { style: { fontSize: 12, fontWeight: 950, color: d.color }, children: `${d.present}/${d.total}` }),
+                                                _jsx("span", { style: { width: 6, height: 6, borderRadius: '50%', background: d.color } })
+                                            ]
+                                        }, d.day)
+                                    ))
+                                })
+                            ]
+                        }),
+
+                        // Upcoming Exam & Project Milestones Countdown
+                        _jsxs("div", {
+                            style: {
+                                background: '#ffffff',
+                                borderRadius: 20,
+                                border: '1px solid #e2e8f0',
+                                padding: '18px 22px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                gap: 12,
+                                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.02)'
+                            },
+                            children: [
+                                _jsxs("div", {
+                                    children: [
+                                        _jsx("span", { style: { fontSize: 10, fontWeight: 900, color: '#ea580c', textTransform: 'uppercase' }, children: "NEXT MILESTONE" }),
+                                        _jsx("h4", { style: { fontSize: 13.5, fontWeight: 900, color: '#0f172a', margin: '2px 0 0 0' }, children: "CAT-2 Circuit Theory Test" }),
+                                        _jsx("p", { style: { fontSize: 11, color: '#64748b', margin: '2px 0 0 0' }, children: "EE Block · LH-304" })
+                                    ]
+                                }),
+                                _jsxs("div", {
+                                    style: {
+                                        background: '#fff7ed',
+                                        border: '1.5px solid #fed7aa',
+                                        borderRadius: 14,
+                                        padding: '8px 16px',
+                                        textAlign: 'center'
+                                    },
+                                    children: [
+                                        _jsx("span", { style: { fontSize: 20, fontWeight: 950, color: '#c2410c', display: 'block', lineHeight: 1 }, children: "4" }),
+                                        _jsx("span", { style: { fontSize: 9.5, fontWeight: 800, color: '#ea580c' }, children: "DAYS LEFT" })
+                                    ]
+                                })
                             ]
                         })
                     ]
@@ -673,7 +644,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     ]
                                 }),
 
-                                // Core Academic Services Grid
+                                // Core Academic Services Grid with Category Filter Pills
                                 _jsxs("div", {
                                     style: {
                                         background: '#ffffff',
@@ -684,10 +655,43 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     },
                                     children: [
                                         _jsxs("div", {
-                                            style: { marginBottom: 18 },
+                                            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 18 },
                                             children: [
-                                                _jsx("h3", { style: { fontSize: 17, fontWeight: 950, color: '#0f172a', margin: 0 }, children: "Department Portals & Workflows" }),
-                                                _jsx("p", { style: { fontSize: 12, color: '#64748b', margin: '3px 0 0 0', fontWeight: 600 }, children: "Quick jump to verified modules and engineering resources" })
+                                                _jsxs("div", {
+                                                    children: [
+                                                        _jsx("h3", { style: { fontSize: 17, fontWeight: 950, color: '#0f172a', margin: 0 }, children: "Department Modules & Portals" }),
+                                                        _jsx("p", { style: { fontSize: 12, color: '#64748b', margin: '3px 0 0 0', fontWeight: 600 }, children: "Quick jump to verified academic workflows and tools" })
+                                                    ]
+                                                }),
+
+                                                // Category Filter Pills
+                                                _jsxs("div", {
+                                                    style: { display: 'flex', gap: 6, background: '#f1f5f9', padding: '4px', borderRadius: 99 },
+                                                    children: [
+                                                        { key: 'all', label: 'All' },
+                                                        { key: 'academics', label: 'Academics' },
+                                                        { key: 'services', label: 'Services' },
+                                                        { key: 'labs', label: 'Labs' },
+                                                        { key: 'ai', label: 'AI & Puzzles' }
+                                                    ].map(cat => (
+                                                        _jsx("button", {
+                                                            type: "button",
+                                                            onClick: () => setSelectedCategory(cat.key),
+                                                            style: {
+                                                                padding: '5px 12px',
+                                                                borderRadius: 99,
+                                                                border: 'none',
+                                                                background: selectedCategory === cat.key ? '#ffffff' : 'transparent',
+                                                                color: selectedCategory === cat.key ? '#0284c7' : '#64748b',
+                                                                fontSize: 11.5,
+                                                                fontWeight: selectedCategory === cat.key ? 900 : 700,
+                                                                cursor: 'pointer',
+                                                                boxShadow: selectedCategory === cat.key ? '0 1px 4px rgba(0, 0, 0, 0.06)' : 'none'
+                                                            },
+                                                            children: cat.label
+                                                        }, cat.key)
+                                                    ))
+                                                })
                                             ]
                                         }),
                                         _jsx("div", {
@@ -875,6 +879,61 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                     ]
                                 }),
 
+                                // Faculty Office Hours Slots
+                                _jsxs("div", {
+                                    style: {
+                                        background: '#ffffff',
+                                        borderRadius: 24,
+                                        border: '1.5px solid #e2e8f0',
+                                        padding: '22px',
+                                        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.03)'
+                                    },
+                                    children: [
+                                        _jsxs("div", {
+                                            style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+                                            children: [
+                                                _jsxs("h3", { style: { fontSize: 14.5, fontWeight: 950, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: 8 }, children: [_jsx(User, { size: 16, style: { color: '#0284c7' } }), "Faculty Office Hours"] }),
+                                                _jsx("span", { style: { fontSize: 10, fontWeight: 800, color: '#64748b' }, children: "This Week" })
+                                            ]
+                                        }),
+                                        _jsx("div", {
+                                            style: { display: 'flex', flexDirection: 'column', gap: 8 },
+                                            children: facultyConsultations.map(f => (
+                                                _jsxs("div", {
+                                                    style: {
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'space-between',
+                                                        padding: '10px 12px',
+                                                        borderRadius: 12,
+                                                        background: '#f8fafc',
+                                                        border: '1px solid #f1f5f9'
+                                                    },
+                                                    children: [
+                                                        _jsxs("div", {
+                                                            children: [
+                                                                _jsx("div", { style: { fontSize: 12, fontWeight: 900, color: '#0f172a' }, children: f.name }),
+                                                                _jsx("div", { style: { fontSize: 10.5, color: '#64748b' }, children: `${f.subject} · ${f.cabin}` })
+                                                            ]
+                                                        }),
+                                                        _jsx("span", {
+                                                            style: {
+                                                                fontSize: 10,
+                                                                fontWeight: 800,
+                                                                color: f.available ? '#16a34a' : '#64748b',
+                                                                background: f.available ? '#dcfce7' : '#f1f5f9',
+                                                                padding: '2px 8px',
+                                                                borderRadius: 99
+                                                            },
+                                                            children: f.slot.split('·')[1] || f.slot
+                                                        })
+                                                    ]
+                                                }, f.name)
+                                            ))
+                                        })
+                                    ]
+                                }),
+
                                 // Smart Lab Workstation Status
                                 _jsxs("div", {
                                     style: {
@@ -911,7 +970,16 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
                                                         _jsx("span", { style: { color: '#0284c7' }, children: "24 / 30 Free" })
                                                     ]
                                                 }),
-                                                _jsx("div", { style: { width: '100%', height: 6, borderRadius: 99, background: '#f1f5f9' }, children: _jsx("div", { style: { width: '80%', height: '100%', borderRadius: 99, background: '#0284c7' } }) })
+                                                _jsx("div", { style: { width: '100%', height: 6, borderRadius: 99, background: '#f1f5f9' }, children: _jsx("div", { style: { width: '80%', height: '100%', borderRadius: 99, background: '#0284c7' } }) }),
+
+                                                _jsxs("div", {
+                                                    style: { display: 'flex', justifyContent: 'space-between', fontSize: 12, fontWeight: 700, marginTop: 4 },
+                                                    children: [
+                                                        _jsx("span", { style: { color: '#0f172a' }, children: "Renewable Energy Simulators" }),
+                                                        _jsx("span", { style: { color: '#7c3aed' }, children: "12 / 20 Free" })
+                                                    ]
+                                                }),
+                                                _jsx("div", { style: { width: '100%', height: 6, borderRadius: 99, background: '#f1f5f9' }, children: _jsx("div", { style: { width: '60%', height: '100%', borderRadius: 99, background: '#7c3aed' } }) })
                                             ]
                                         })
                                     ]
