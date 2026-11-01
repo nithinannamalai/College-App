@@ -621,5 +621,49 @@ html {
   box-sizing: border-box !important;
 }
 
+/* ── 17. DESKTOP UNIFIED PAGE WORKSPACE ENHANCEMENTS ── */
+@media (min-width: 992px) {
+  /* In desktop page wrapper, suppress redundant duplicate internal headers & back buttons */
+  .desktop-page-wrapper .dedicated-page-header .page-back-btn,
+  .desktop-page-wrapper .panel-header .back-btn,
+  .desktop-page-wrapper .dedicated-page-header .dedicated-page-title,
+  .desktop-page-wrapper .panel-header .panel-title {
+    display: none !important;
+  }
+
+  /* Make internal headers align cleanly as compact action toolbars */
+  .desktop-page-wrapper .dedicated-page-header,
+  .desktop-page-wrapper .panel-header {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 0 16px 0 !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Remove double borders, nested padding & mobile width bottlenecks */
+  .desktop-page-wrapper .dedicated-page-view,
+  .desktop-page-wrapper .panel-view,
+  .desktop-page-wrapper .dedicated-page-body,
+  .desktop-page-wrapper .panel-body {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Ensure card grids inside modules span the full desktop canvas */
+  .desktop-page-wrapper div[style*="max-width: 800"],
+  .desktop-page-wrapper div[style*="maxWidth: 800"],
+  .desktop-page-wrapper div[style*="max-width: 720"],
+  .desktop-page-wrapper div[style*="maxWidth: 720"] {
+    max-width: 100% !important;
+  }
+}
+
 
 

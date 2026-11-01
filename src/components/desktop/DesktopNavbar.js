@@ -53,43 +53,31 @@ export const DesktopNavbar = ({
                 boxSizing: 'border-box'
             },
             children: [
-                // ── LEFT: BRAND & BREADCRUMB ──
+                // ── LEFT: PORTAL CONTEXT & ACTIVE SESSION ──
                 _jsxs("div", {
-                    style: { display: 'flex', alignItems: 'center', gap: 18 },
+                    style: { display: 'flex', alignItems: 'center', gap: 14 },
                     children: [
                         _jsxs("div", {
                             onClick: () => onSelectTab(null),
-                            style: { display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' },
+                            style: {
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 8,
+                                padding: '7px 14px',
+                                borderRadius: 99,
+                                background: 'rgba(2, 132, 199, 0.08)',
+                                border: '1.5px solid rgba(2, 132, 199, 0.2)',
+                                color: '#0284c7',
+                                fontWeight: 800,
+                                fontSize: 12.5,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease'
+                            },
                             children: [
-                                _jsx("div", {
-                                    style: {
-                                        width: 38,
-                                        height: 38,
-                                        borderRadius: 12,
-                                        background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        boxShadow: '0 4px 12px rgba(2, 132, 199, 0.3)',
-                                        flexShrink: 0
-                                    },
-                                    children: _jsx("img", { src: appLogo, alt: "Logo", style: { width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' } })
-                                }),
-                                _jsxs("div", {
-                                    children: [
-                                        _jsxs("div", {
-                                            style: { fontSize: 16, fontWeight: 950, color: '#0f172a', letterSpacing: -0.3, lineHeight: 1.1 },
-                                            children: [
-                                                "Tutor",
-                                                _jsx("span", { style: { color: '#0284c7' }, children: "Ward" })
-                                            ]
-                                        }),
-                                        _jsx("span", {
-                                            style: { fontSize: 9.5, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.6 },
-                                            children: "EEE · SREC AUTONOMOUS"
-                                        })
-                                    ]
-                                })
+                                _jsx(Sparkles, { size: 14, style: { color: '#0284c7' } }),
+                                _jsx("span", { children: "Department of EEE" }),
+                                _jsx("span", { style: { color: '#94a3b8' }, children: "•" }),
+                                _jsx("span", { style: { color: '#0f172a' }, children: "Autonomous Portal" })
                             ]
                         }),
 
@@ -101,7 +89,7 @@ export const DesktopNavbar = ({
                                 gap: 8,
                                 background: '#f8fafc',
                                 border: '1px solid #e2e8f0',
-                                padding: '5px 12px',
+                                padding: '6px 12px',
                                 borderRadius: 99,
                                 fontSize: 11.5,
                                 fontWeight: 800,
@@ -460,3 +448,4 @@ export const DesktopNavbar = ({
         })
     );
 };
+

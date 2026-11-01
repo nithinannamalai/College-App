@@ -198,7 +198,7 @@ export const StudentManager = ({ onBack, isAdmin = true }) => {
                             background: '#0052cc', color: '#fff', border: 'none',
                             padding: '6px 14px', borderRadius: 8, fontSize: 11.5, fontWeight: 800,
                             cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,204,0.2)'
-                        }, children: [_jsx(Plus, { size: 14 }), " Add Student"] }))] }), _jsxs("div", { style: { padding: 16, maxWidth: 800, margin: '0 auto' }, children: [statusMessage && (_jsxs("div", { style: {
+                        }, children: [_jsx(Plus, { size: 14 }), " Add Student"] }))] }), _jsxs("div", { style: { padding: '8px 0 24px', maxWidth: 1380, width: '100%', margin: '0 auto' }, children: [statusMessage && (_jsxs("div", { style: {
                             padding: '10px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
                             background: statusMessage.type === 'success' ? '#ecfdf5' : '#fef2f2',
                             color: statusMessage.type === 'success' ? '#065f46' : '#991b1b',
