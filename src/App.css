@@ -581,4 +581,45 @@ html {
   min-height: 100vh !important;
 }
 
+/* ── 16. RESPONSIVE SCREEN SIZE AUTO-ADJUSTMENT ── */
+.dedicated-page-view {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.dedicated-page-header {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto 20px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Responsive Adaptive Bento Grid */
+.attendance-adaptive-grid {
+  display: grid !important;
+  grid-template-columns: minmax(340px, 420px) 1fr !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 960px) {
+  .attendance-adaptive-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* Responsive Content Containers */
+.responsive-full-content {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+}
+
+
 

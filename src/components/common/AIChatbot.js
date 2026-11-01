@@ -69,7 +69,7 @@ Here is the official context of the EEE Department:
 
 Answer clearly, politely, and keep your responses concise (maximum 3-4 sentences when possible). Support standard markdown in formatting.
 `;
-const DEFAULT_API_KEY = ['AQ.Ab8RN6Jb7qBzG', 'qKy9mddRwIhh0R7ky0t4FqsEfC7KLWow93VuA'].join('');
+const DEFAULT_API_KEY = '';
 export const AIChatbot = ({ isFullPage = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([

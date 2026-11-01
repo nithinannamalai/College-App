@@ -173,7 +173,7 @@ export function BugReport({ onBack, currentUser, isAdmin = false }) {
       ] }),
 
       // Main Content Area
-      _jsx("div", { style: { maxWidth: 640, margin: '0 auto', padding: '16px 16px 32px' }, children: [
+      _jsx("div", { style: { maxWidth: 1000, width: '100%', margin: '0 auto', padding: '16px 24px 32px' }, children: [
         // TAB 1: SUBMIT REPORT
         activeTab === 'report' && (
           submitted ? (
