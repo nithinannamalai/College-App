@@ -1,14 +1,47 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from 'react';
+
+// Tutor photos from tutor-booking-client-main
 import tutor1 from '../../assets/tutor/tutor1.jpg';
 import tutor2 from '../../assets/tutor/tutor2.jpg';
 import tutor3 from '../../assets/tutor/tutor3.jpg';
 
+// Multi-layer parallax depth assets from ExploreScape
+import bac1 from '../../assets/parallax/bac1.png';
+import bac2 from '../../assets/parallax/bac2.png';
+import bac2_2 from '../../assets/parallax/bac2_2.png';
+import bac3 from '../../assets/parallax/bac3.png';
+import bac4 from '../../assets/parallax/bac4.png';
+
 export const DesktopLandingPage = ({ onOpenLogin }) => {
+    // Parallax interactive mouse tracking & scroll position
+    const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+    const [scrollOffset, setScrollOffset] = useState(0);
+
+    // Hero carousel state
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
-    // Auto-advance hero slides every 4.5 seconds
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const normX = (e.clientX / window.innerWidth - 0.5) * 40; // -20 to +20px
+            const normY = (e.clientY / window.innerHeight - 0.5) * 30; // -15 to +15px
+            setMouseOffset({ x: normX, y: normY });
+        };
+
+        const handleScroll = () => {
+            setScrollOffset(window.scrollY);
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    // 4.5s auto-sliding for tutor hero cards
     useEffect(() => {
         if (isPaused) return;
         const interval = setInterval(() => {
@@ -20,7 +53,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
     const prevSlide = () => setCurrentSlide(prev => (prev === 0 ? 2 : prev - 1));
     const nextSlide = () => setCurrentSlide(prev => (prev === 2 ? 0 : prev + 1));
 
-    // Stats data from tutor-booking-client-main/src/components/Stats.jsx
+    // Stats data from tutor-booking-client-main
     const stats = [
         {
             value: "200+",
@@ -100,11 +133,11 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
         rose: { bg: '#fff1f2', icon: '#e11d48', text: '#e11d48', border: '#ffe4e6' },
     };
 
-    // Features list from tutor-booking-client-main/src/components/OurAllFeature.jsx
+    // Features list
     const features = [
         {
-            title: "Verified Tutors",
-            desc: "Every tutor goes through a strict verification process to ensure quality, credibility, and teaching excellence.",
+            title: "Verified Faculty Tutors",
+            desc: "Every tutor undergoes department verification to ensure rigorous teaching, academic excellence, and personalized mentoring.",
             color: "blue",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -114,7 +147,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
         },
         {
             title: "Flexible Scheduling",
-            desc: "Book sessions at times that work for you — mornings, evenings, or weekends. Your pace, your schedule.",
+            desc: "Book mentoring sessions at hours tailored to your academic periods — before lab slots or afternoon consultation hours.",
             color: "violet",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -123,8 +156,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "Global Reach",
-            desc: "We offer programs designed to meet the needs of individuals from all around the world, in 20+ subjects.",
+            title: "Global Reach & Core Tracks",
+            desc: "Structured roadmaps across Power Systems, Embedded Systems, IoT, EV Technology, and Tier-1 IT software placements.",
             color: "teal",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -133,8 +166,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "Award-Winning Platform",
-            desc: "14 international awards for excellence in online education, student outcomes, and platform innovation.",
+            title: "Award-Winning Institution",
+            desc: "NBA & NAAC A+ accredited Department of Electrical & Electronics Engineering with 14 national and state awards.",
             color: "amber",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -143,8 +176,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "24/7 Support",
-            desc: "Our dedicated support team is always here to help — at any hour, any day of the week, no waiting.",
+            title: "24/7 Neural AI Tutor",
+            desc: "Integrated Gemini 2.0 AI tutor specialized in engineering circuit analysis, DSP algorithms, and exam problem solving.",
             color: "green",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -153,8 +186,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "Progress Tracking",
-            desc: "Detailed progress reports after every session so students and parents can measure real improvement.",
+            title: "Dynamic Attendance Radar",
+            desc: "Live period logs, automatic 75% cutoff forecasting, low-attendance alerts, and instant On-Duty generation.",
             color: "rose",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -163,8 +196,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "Affordable Pricing",
-            desc: "Transparent hourly rates with no hidden fees. Find a tutor that fits your budget without compromise.",
+            title: "Digital Credentials & Pass",
+            desc: "Holographic student pass with verified QR code, automated request letters, bonafide certificates, and grade archives.",
             color: "blue",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -173,8 +206,8 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             )
         },
         {
-            title: "Instant Booking",
-            desc: "Book a session in under 60 seconds. Browse, pick your tutor, choose a time, and you are all set.",
+            title: "Instant One-Click Booking",
+            desc: "Connect directly with faculty advisors, book academic counseling slots, and review research mentoring guidance in seconds.",
             color: "violet",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: 20, height: 20 }}>
@@ -184,7 +217,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
         }
     ];
 
-    // Popular tutors data from tutor-booking-client-main/src/components/TutorsFeatures
+    // Popular faculty tutors
     const popularTutors = [
         {
             id: "1",
@@ -216,113 +249,393 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
     ];
 
     return (
-        <div style={{ fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", background: '#ffffff', color: '#09090b', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
-            {/* ── 1. NAVBAR (Exact match to tutor-booking-client-main/src/components/Navber/Navbar.jsx) ── */}
-            <nav style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #e4e4e7', transition: 'all 0.3s ease' }}>
-                <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-                    {/* Brand */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <div style={{ width: 34, height: 34, borderRadius: 10, background: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(37, 99, 235, 0.35)' }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style={{ width: 18, height: 18 }}>
-                                <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
-                                <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
-                                <path d="M4.462 19.462c.42-.419.753-.89 1-1.395.453.214.902.435 1.347.662a6.742 6.742 0 0 1-1.286 1.794.75.75 0 0 1-1.06-1.06Z" />
-                            </svg>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span style={{ fontWeight: 800, fontSize: 19, letterSpacing: '-0.5px', color: '#0f172a', lineHeight: 1 }}>
-                                Tutor<span style={{ color: '#2563eb' }}>Book</span>
-                            </span>
-                            <span style={{ fontSize: 10, color: '#64748b', fontWeight: 600, letterSpacing: '0.2px' }}>
-                                SREC · DEPT OF EEE
-                            </span>
-                        </div>
-                    </div>
+        <div style={{ fontFamily: "'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif", background: '#ffffff', color: '#09090b', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
+            
+            {/* ── 1. CINEMATIC 3D PARALLAX HERO (ExploreScape Travel Style) ── */}
+            <section style={{
+                position: 'relative',
+                height: '100vh',
+                width: '100vw',
+                overflow: 'hidden',
+                background: '#04121a'
+            }}>
+                {/* Layer 4: Distant Sky Background */}
+                <img
+                    src={bac4}
+                    alt="Parallax Sky"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'top center',
+                        transform: `translate3d(${mouseOffset.x * 0.12}px, ${scrollOffset * 0.2 + mouseOffset.y * 0.12}px, 0) scale(1.08)`,
+                        transition: 'transform 0.12s ease-out',
+                        zIndex: 1
+                    }}
+                />
 
-                    {/* Nav Links */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-                        {['Home', 'Tutors', 'Academics', 'Services', 'About', 'Contact'].map((item, idx) => (
+                {/* Layer 3: Distant Mountains */}
+                <img
+                    src={bac3}
+                    alt="Parallax Distant Mountains"
+                    style={{
+                        position: 'absolute',
+                        bottom: '-6%',
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        transform: `translate3d(${mouseOffset.x * 0.25}px, ${scrollOffset * 0.35 + mouseOffset.y * 0.2}px, 0) scale(1.04)`,
+                        transition: 'transform 0.12s ease-out',
+                        zIndex: 2
+                    }}
+                />
+
+                {/* Layer 2.5: Huge 3D Embedded Center Typography (Placed BEHIND foreground mountains like KERALA in ExploreScape) */}
+                <div style={{
+                    position: 'absolute',
+                    top: '38%',
+                    left: '50%',
+                    transform: `translate(calc(-50% + ${mouseOffset.x * 0.45}px), calc(-50% + ${scrollOffset * 0.42 + mouseOffset.y * 0.3}px))`,
+                    transition: 'transform 0.12s ease-out',
+                    zIndex: 3,
+                    textAlign: 'center',
+                    width: '100%',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
+                }}>
+                    <h3 style={{
+                        fontSize: 'clamp(1rem, 2vw, 1.6rem)',
+                        fontWeight: 500,
+                        letterSpacing: '14px',
+                        color: 'rgba(255, 255, 255, 0.92)',
+                        textTransform: 'uppercase',
+                        margin: '0 0 10px 0',
+                        textShadow: '0 4px 18px rgba(0,0,0,0.6)'
+                    }}>
+                        The Department of EEE · SREC
+                    </h3>
+                    <h1 style={{
+                        fontSize: 'clamp(4.5rem, 11vw, 11rem)',
+                        fontWeight: 900,
+                        letterSpacing: 'clamp(12px, 3.5vw, 36px)',
+                        textTransform: 'uppercase',
+                        color: '#ffffff',
+                        margin: 0,
+                        lineHeight: 0.95,
+                        textShadow: '0 10px 40px rgba(0,0,0,0.85), 0 2px 8px rgba(0,0,0,0.5)'
+                    }}>
+                        TUTOR WARD
+                    </h1>
+                </div>
+
+                {/* Layer 2: Midground Mountain Slopes */}
+                <img
+                    src={bac2_2}
+                    alt="Parallax Midground"
+                    style={{
+                        position: 'absolute',
+                        bottom: '-10%',
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        transform: `translate3d(${mouseOffset.x * 0.65}px, ${scrollOffset * 0.55 + mouseOffset.y * 0.45}px, 0)`,
+                        transition: 'transform 0.12s ease-out',
+                        zIndex: 4
+                    }}
+                />
+
+                {/* Layer 1: Foreground Cliffs & Foliage */}
+                <img
+                    src={bac1}
+                    alt="Parallax Foreground"
+                    style={{
+                        position: 'absolute',
+                        bottom: '-12%',
+                        left: 0,
+                        width: '100%',
+                        objectFit: 'cover',
+                        transform: `translate3d(${mouseOffset.x * 1.05}px, ${scrollOffset * 0.72 + mouseOffset.y * 0.65}px, 0)`,
+                        transition: 'transform 0.12s ease-out',
+                        zIndex: 5
+                    }}
+                />
+
+                {/* Bottom Shadow Gradient to blend smoothly into the next sections */}
+                <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '240px',
+                    background: 'linear-gradient(to bottom, transparent 0%, rgba(15, 23, 42, 0.7) 60%, #0f172a 100%)',
+                    zIndex: 6,
+                    pointerEvents: 'none'
+                }} />
+
+                {/* ── ULTRA-CLEAN FLOATING PILL NAVBAR: BRAND + ONLY LOGIN & SIGN UP BUTTONS ── */}
+                <header style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 20,
+                    padding: '20px 24px'
+                }}>
+                    <nav style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 28,
+                        padding: '8px 24px',
+                        minWidth: 420,
+                        background: 'rgba(255, 255, 255, 0.18)',
+                        border: '1px solid rgba(255, 255, 255, 0.35)',
+                        borderRadius: 40,
+                        backdropFilter: 'blur(20px)',
+                        boxShadow: '0 12px 36px rgba(0, 0, 0, 0.35)',
+                        transition: 'all 0.3s ease'
+                    }}>
+                        {/* Brand Logo */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                            <div style={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: 10,
+                                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 2px 10px rgba(37, 99, 235, 0.4)'
+                            }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style={{ width: 18, height: 18 }}>
+                                    <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
+                                    <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
+                                </svg>
+                            </div>
+                            <span style={{ fontWeight: 800, fontSize: 17, color: '#ffffff', letterSpacing: 0.2 }}>
+                                Tutor<span style={{ color: '#38bdf8' }}>Ward</span>
+                            </span>
+                        </div>
+
+                        {/* ONLY LOGIN & SIGN UP BUTTONS */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                             <button
-                                key={item}
-                                onClick={() => {
-                                    if (item === 'Tutors' || item === 'Services' || item === 'Academics') {
-                                        onOpenLogin(false);
-                                    } else {
-                                        const el = document.getElementById(item.toLowerCase());
-                                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                    }
-                                }}
+                                onClick={() => onOpenLogin(false)}
                                 style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    fontSize: 14,
-                                    fontWeight: idx === 0 ? 700 : 500,
-                                    color: idx === 0 ? '#2563eb' : '#475569',
+                                    padding: '9px 24px',
+                                    borderRadius: 99,
+                                    border: '1.5px solid rgba(255, 255, 255, 0.65)',
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    color: '#ffffff',
+                                    fontSize: 13.5,
+                                    fontWeight: 700,
+                                    letterSpacing: '0.4px',
                                     cursor: 'pointer',
-                                    padding: '6px 4px',
-                                    transition: 'color 0.2s ease'
+                                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'}
-                                onMouseLeave={(e) => e.currentTarget.style.color = idx === 0 ? '#2563eb' : '#475569'}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#ffffff';
+                                    e.currentTarget.style.color = '#0f172a';
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                                    e.currentTarget.style.color = '#ffffff';
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                }}
                             >
-                                {item}
+                                Log In
                             </button>
-                        ))}
-                    </div>
 
-                    {/* Right Login / Signup Action Buttons */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <button
+                                onClick={() => onOpenLogin(true)}
+                                style={{
+                                    padding: '9px 26px',
+                                    borderRadius: 99,
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                                    color: '#ffffff',
+                                    fontSize: 13.5,
+                                    fontWeight: 700,
+                                    letterSpacing: '0.4px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.45)',
+                                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.boxShadow = '0 6px 22px rgba(37, 99, 235, 0.65)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(37, 99, 235, 0.45)';
+                                }}
+                            >
+                                Sign Up
+                            </button>
+                        </div>
+                    </nav>
+                </header>
+
+                {/* ExploreScape Floating Description Narrative & Clean Dual CTA */}
+                <div style={{
+                    position: 'absolute',
+                    bottom: '14%',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 16,
+                    zIndex: 10,
+                    textAlign: 'center',
+                    padding: '0 20px',
+                    boxSizing: 'border-box'
+                }}>
+                    <p style={{
+                        maxWidth: 720,
+                        fontSize: 14,
+                        fontWeight: 400,
+                        letterSpacing: '0.8px',
+                        lineHeight: 1.8,
+                        color: 'rgba(255, 255, 255, 0.88)',
+                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.75)',
+                        margin: 0
+                    }}>
+                        Sri Ramakrishna Engineering College provides an autonomous, award-winning academic mentoring environment. Connect seamlessly with verified department faculty tutors, track attendance dynamically, practice engineering circuits, and simulate graduation GPAs in one immersive portal.
+                    </p>
+
+                    <div style={{ display: 'flex', gap: 14, marginTop: 6 }}>
                         <button
                             onClick={() => onOpenLogin(false)}
                             style={{
-                                padding: '8px 18px',
-                                borderRadius: 8,
-                                border: '1px solid #cbd5e1',
-                                background: '#ffffff',
-                                color: '#1e293b',
                                 fontSize: 13.5,
-                                fontWeight: 600,
+                                fontWeight: 700,
+                                letterSpacing: '2px',
+                                textTransform: 'uppercase',
+                                color: '#ffffff',
+                                backgroundColor: 'rgba(37, 99, 235, 0.88)',
+                                border: '1px solid rgba(255, 255, 255, 0.65)',
+                                borderRadius: 50,
+                                height: 48,
+                                padding: '0 32px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 10,
                                 cursor: 'pointer',
-                                transition: 'all 0.2s ease'
+                                backdropFilter: 'blur(8px)',
+                                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+                                transition: 'all 0.25s ease'
                             }}
-                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb'; }}
-                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.color = '#1e293b'; }}
+                            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#0f172a'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(37, 99, 235, 0.88)'; e.currentTarget.style.color = '#ffffff'; }}
                         >
-                            Login
+                            Log In to Portal →
                         </button>
+
                         <button
                             onClick={() => onOpenLogin(true)}
                             style={{
-                                padding: '8px 20px',
-                                borderRadius: 8,
-                                border: 'none',
-                                background: '#2563eb',
-                                color: '#ffffff',
-                                fontSize: 13.5,
+                                fontSize: 13,
                                 fontWeight: 600,
+                                letterSpacing: '1.5px',
+                                textTransform: 'uppercase',
+                                color: 'rgba(255, 255, 255, 0.95)',
+                                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                                border: '1px solid rgba(255, 255, 255, 0.35)',
+                                borderRadius: 50,
+                                height: 48,
+                                padding: '0 30px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 8,
                                 cursor: 'pointer',
-                                boxShadow: '0 2px 8px rgba(37, 99, 235, 0.3)',
-                                transition: 'all 0.2s ease'
+                                backdropFilter: 'blur(8px)'
                             }}
-                            onMouseEnter={(e) => { e.currentTarget.style.background = '#1d4ed8'; }}
-                            onMouseLeave={(e) => { e.currentTarget.style.background = '#2563eb'; }}
+                            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'; }}
                         >
-                            Signup
+                            Create Account
                         </button>
                     </div>
                 </div>
-            </nav>
 
-            {/* ── 2. HERO SECTION (Exact match to tutor-booking-client-main/src/components/Hero.jsx) ── */}
+                {/* ExploreScape Left/Right Arrow Navigation */}
+                <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '0 3%',
+                    boxSizing: 'border-box',
+                    zIndex: 10,
+                    pointerEvents: 'none'
+                }}>
+                    <button
+                        onClick={prevSlide}
+                        aria-label="Previous Slide"
+                        style={{
+                            pointerEvents: 'auto',
+                            background: 'rgba(255, 255, 255, 0.15)',
+                            backdropFilter: 'blur(6px)',
+                            border: '1px solid rgba(255, 255, 255, 0.3)',
+                            width: 48,
+                            height: 48,
+                            borderRadius: '50%',
+                            color: '#ffffff',
+                            fontSize: 22,
+                            fontWeight: 900,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.3)'
+                        }}
+                    >
+                        ‹
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        aria-label="Next Slide"
+                        style={{
+                            pointerEvents: 'auto',
+                            background: 'rgba(255, 255, 255, 0.15)',
+                            backdropFilter: 'blur(6px)',
+                            border: '1px solid rgba(255, 255, 255, 0.3)',
+                            width: 48,
+                            height: 48,
+                            borderRadius: '50%',
+                            color: '#ffffff',
+                            fontSize: 22,
+                            fontWeight: 900,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.3)'
+                        }}
+                    >
+                        ›
+                    </button>
+                </div>
+            </section>
+
+            {/* ── 2. TUTOR CAROUSEL SHOWCASE (From tutor-booking-client-main/src/components/Hero.jsx) ── */}
             <section
-                id="home"
+                id="details-section"
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
-                style={{ width: '100%', position: 'relative', overflow: 'hidden' }}
+                style={{ width: '100%', position: 'relative', overflow: 'hidden', background: '#0f172a' }}
             >
                 {/* SLIDE 1 */}
                 {currentSlide === 0 && (
-                    <div style={{ minHeight: '84vh', display: 'flex', alignItems: 'center', background: '#EFF6FF', transition: 'background 0.5s ease', padding: '60px 0' }}>
+                    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', background: '#EFF6FF', transition: 'background 0.5s ease', padding: '60px 0' }}>
                         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', width: '100%', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 48, alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 580 }}>
                                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#dbeafe', color: '#1d4ed8', fontSize: 13, fontWeight: 600, padding: '6px 16px', borderRadius: 99, width: 'fit-content' }}>
@@ -330,12 +643,12 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                                     Trusted by 7,500+ learners worldwide
                                 </span>
 
-                                <h1 style={{ fontSize: 46, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
+                                <h1 style={{ fontSize: 44, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
                                     Study Your Own Mind, <span style={{ color: '#2563eb' }}>Find the Best Tutor</span> in the World
                                 </h1>
 
                                 <p style={{ fontSize: 16, lineHeight: 1.65, color: '#6b7280', margin: 0 }}>
-                                    We have the international reputation for high quality teaching and success. Connect with verified tutors for personalized sessions, academic radar, and career growth.
+                                    We have the international reputation for high quality teaching and success. Connect with verified faculty tutors for personalized counseling, academic radar, and career growth.
                                 </p>
 
                                 <div style={{ display: 'flex', gap: 14, paddingTop: 8 }}>
@@ -391,7 +704,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
 
                 {/* SLIDE 2 */}
                 {currentSlide === 1 && (
-                    <div style={{ minHeight: '84vh', display: 'flex', alignItems: 'center', background: '#F0FDF4', transition: 'background 0.5s ease', padding: '60px 0' }}>
+                    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', background: '#F0FDF4', transition: 'background 0.5s ease', padding: '60px 0' }}>
                         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', width: '100%', display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 48, alignItems: 'center' }}>
                             <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
                                 <div style={{ position: 'relative', width: '100%', maxWidth: 440, borderRadius: 20, overflow: 'hidden', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.15)' }}>
@@ -409,12 +722,12 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                                     Enroll now — limited seats
                                 </span>
 
-                                <h1 style={{ fontSize: 46, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
+                                <h1 style={{ fontSize: 44, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
                                     Classes Now <span style={{ color: '#16a34a' }}>Forming!</span>
                                 </h1>
 
                                 <p style={{ fontSize: 16, lineHeight: 1.65, color: '#6b7280', margin: 0 }}>
-                                    Our courses are taught at beginner to advanced levels on a year-round basis. Find the perfect pace for your learning journey with hands-on lab projects and mentoring.
+                                    Our courses are taught at beginner to advanced levels on a year-round basis. Find the perfect pace for your engineering journey with hands-on lab experiments and research guidance.
                                 </p>
 
                                 <div style={{ display: 'flex', gap: 14, paddingTop: 8 }}>
@@ -432,7 +745,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
 
                 {/* SLIDE 3 */}
                 {currentSlide === 2 && (
-                    <div style={{ minHeight: '84vh', display: 'flex', alignItems: 'center', background: '#FFF7ED', transition: 'background 0.5s ease', padding: '60px 0' }}>
+                    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', background: '#FFF7ED', transition: 'background 0.5s ease', padding: '60px 0' }}>
                         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', width: '100%', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 48, alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 580 }}>
                                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#ffedd5', color: '#c2410c', fontSize: 13, fontWeight: 600, padding: '6px 16px', borderRadius: 99, width: 'fit-content' }}>
@@ -440,12 +753,12 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                                     Internationally recognized institution
                                 </span>
 
-                                <h1 style={{ fontSize: 46, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
+                                <h1 style={{ fontSize: 44, fontWeight: 800, lineHeight: 1.18, color: '#111827', margin: 0, letterSpacing: '-0.8px' }}>
                                     We Are a <span style={{ color: '#ea580c' }}>Trusted Institution!</span>
                                 </h1>
 
                                 <p style={{ fontSize: 16, lineHeight: 1.65, color: '#6b7280', margin: 0 }}>
-                                    We offer programs designed to meet the needs of individuals from all around the world — with 14 international awards for excellence in teaching and technical education.
+                                    We offer programs designed to meet the needs of scholars from all around the world — with 14 international awards for excellence in technical education and research outcomes.
                                 </p>
 
                                 <div style={{ display: 'flex', gap: 14, paddingTop: 8 }}>
@@ -481,86 +794,10 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                         </div>
                     </div>
                 )}
-
-                {/* Swiper Next / Prev Floating Controls */}
-                <button
-                    onClick={prevSlide}
-                    aria-label="Previous Slide"
-                    style={{
-                        position: 'absolute',
-                        left: 24,
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: 44,
-                        height: 44,
-                        borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        backdropFilter: 'blur(4px)',
-                        border: 'none',
-                        color: '#2563eb',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 18,
-                        fontWeight: 900,
-                        zIndex: 10
-                    }}
-                >
-                    ‹
-                </button>
-                <button
-                    onClick={nextSlide}
-                    aria-label="Next Slide"
-                    style={{
-                        position: 'absolute',
-                        right: 24,
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: 44,
-                        height: 44,
-                        borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        backdropFilter: 'blur(4px)',
-                        border: 'none',
-                        color: '#2563eb',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 18,
-                        fontWeight: 900,
-                        zIndex: 10
-                    }}
-                >
-                    ›
-                </button>
-
-                {/* Carousel Pagination Dots */}
-                <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, zIndex: 10 }}>
-                    {[0, 1, 2].map((idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => setCurrentSlide(idx)}
-                            style={{
-                                width: currentSlide === idx ? 24 : 8,
-                                height: 8,
-                                borderRadius: 4,
-                                border: 'none',
-                                background: '#2563eb',
-                                opacity: currentSlide === idx ? 1 : 0.35,
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                            }}
-                        />
-                    ))}
-                </div>
             </section>
 
             {/* ── 3. STATS SECTION (Exact match to tutor-booking-client-main/src/components/Stats.jsx) ── */}
-            <section style={{ padding: '70px 24px', background: '#ffffff' }}>
+            <section style={{ padding: '75px 24px', background: '#ffffff' }}>
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: 44 }}>
                         <span style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#2563eb', marginBottom: 8 }}>
@@ -739,7 +976,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
             </section>
 
             {/* ── 5. WHY CHOOSE US / ALL FEATURES SECTION (Exact match to tutor-booking-client-main/src/components/OurAllFeature.jsx) ── */}
-            <section style={{ padding: '80px 24px', background: '#ffffff' }}>
+            <section id="features" style={{ padding: '80px 24px', background: '#ffffff' }}>
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: 50 }}>
                         <span style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#2563eb', marginBottom: 8 }}>
@@ -937,7 +1174,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                                 Product
                             </h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                {['Features', 'Tutors', 'Pricing', 'FAQ'].map((l) => (
+                                {['Features', 'Tutors', 'Academics', 'FAQ'].map((l) => (
                                     <li key={l}>
                                         <button onClick={() => onOpenLogin(false)} style={{ background: 'none', border: 'none', padding: 0, fontSize: 13.5, color: '#71717a', cursor: 'pointer', transition: 'color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#71717a'}>
                                             {l}
@@ -947,13 +1184,13 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                             </ul>
                         </div>
 
-                        {/* Column 4: Company */}
+                        {/* Column 4: Institution */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                             <h4 style={{ margin: 0, fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#f4f4f5' }}>
-                                Company
+                                Institution
                             </h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                {['About', 'Privacy', 'Terms of Service'].map((l) => (
+                                {['Sri Ramakrishna Eng. College', 'Department of EEE', 'Accreditation (NBA/NAAC)', 'About Portal'].map((l) => (
                                     <li key={l}>
                                         <button onClick={() => onOpenLogin(false)} style={{ background: 'none', border: 'none', padding: 0, fontSize: 13.5, color: '#71717a', cursor: 'pointer', transition: 'color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#71717a'}>
                                             {l}
@@ -969,7 +1206,7 @@ export const DesktopLandingPage = ({ onOpenLogin }) => {
                                 Developers
                             </h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                {['Public API', 'Documentation', 'Guides'].map((l) => (
+                                {['Public API', 'Documentation', 'Security & RLS', 'Support Guides'].map((l) => (
                                     <li key={l}>
                                         <button onClick={() => onOpenLogin(false)} style={{ background: 'none', border: 'none', padding: 0, fontSize: 13.5, color: '#71717a', cursor: 'pointer', transition: 'color 0.15s ease' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#71717a'}>
                                             {l}
