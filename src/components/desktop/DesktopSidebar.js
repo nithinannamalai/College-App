@@ -223,7 +223,7 @@ export const DesktopSidebar = ({
 
                             // ── INTELLIGENCE & CAMPUS ──
                             _jsx("div", { style: { fontSize: 9.5, fontWeight: 900, color: '#94a3b8', letterSpacing: 0.8, textTransform: 'uppercase', padding: '14px 10px 4px' }, children: "CAMPUS & AI" }),
-                            navItem('ai', _jsx(Sparkles, { size: 16 }), "24/7 AI Neural Tutor", "AI 2.0"),
+                            navItem('ai', _jsx(Sparkles, { size: 16 }), "Personal AI Trainer", "DeepTutor"),
                             navItem('puzzle-games', _jsx(Gamepad2, { size: 16 }), "Mind & Brain Games"),
                             navItem('college-rules', _jsx(Shield, { size: 16 }), "College Regulations"),
                             navItem('campus-map', _jsx(Map, { size: 16 }), "Interactive Campus Map"),

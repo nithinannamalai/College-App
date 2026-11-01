@@ -86,7 +86,7 @@ export const DesktopVisionaDashboard = ({ currentUser, onOpenTab }) => {
         { key: 'request-letters', category: 'services', title: 'OD & Request Letters', icon: _jsx(FileText, { size: 20 }), color: '#0891b2', bg: '#ecfeff', desc: 'Instant PDF export & approval tracking' },
         { key: 'lab-finder', category: 'labs', title: 'Lab Seat Finder', icon: _jsx(Compass, { size: 20 }), color: '#4f46e5', bg: '#eef2ff', desc: 'Real-time PC workstation availability' },
         { key: 'career', category: 'career', title: 'Career Roadmaps & GATE', icon: _jsx(Sparkles, { size: 20 }), color: '#db2777', bg: '#fdf2f8', desc: 'Core electrical & IT recruitment prep' },
-        { key: 'ai', category: 'ai', title: '24/7 AI Neural Tutor', icon: _jsx(Bot, { size: 20 }), color: '#7c3aed', bg: '#f5f3ff', desc: 'Gemini-powered circuit & theory mentor' },
+        { key: 'ai', category: 'ai', title: 'Personal AI Trainer', icon: _jsx(Sparkles, { size: 20 }), color: '#7c3aed', bg: '#f5f3ff', desc: 'DeepTutor Socratic mentor & problem solver' },
         { key: 'puzzle-games', category: 'ai', title: 'Mind & Brain Games', icon: _jsx(Gamepad2, { size: 20 }), color: '#9333ea', bg: '#faf5ff', desc: 'Cognitive circuit & memory puzzles' },
         { key: 'college-rules', category: 'services', title: 'College Regulations', icon: _jsx(Shield, { size: 20 }), color: '#475569', bg: '#f1f5f9', desc: 'Autonomous code of conduct & dress code' },
         { key: 'campus-map', category: 'services', title: 'Interactive Campus Map', icon: _jsx(MapPin, { size: 20 }), color: '#16a34a', bg: '#f0fdf4', desc: '3D navigation for blocks & labs' },

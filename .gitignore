@@ -34,3 +34,16 @@ android/app/build/
 android/.gradle/
 ios/App/App/public/
 ios/App/Pods/
+
+# DeepTutor / Python / Next artifacts
+.venv/
+*/.venv/
+__pycache__/
+*/__pycache__/
+.next/
+*/.next/
+.next-deeptutor/
+*/.next-deeptutor/
+*.egg-info/
+*/.egg-info/
+

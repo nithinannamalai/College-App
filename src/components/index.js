@@ -48,3 +48,4 @@ export { DesktopAnnouncements } from './desktop/DesktopAnnouncements.js';
 export { DesktopCalendarCourses } from './desktop/DesktopCalendarCourses.js';
 export { DesktopNptelTracker } from './desktop/DesktopNptelTracker.js';
 export { DesktopPuzzleGames } from './desktop/DesktopPuzzleGames.js';
+export { DesktopAiTrainer } from './desktop/DesktopAiTrainer.js';

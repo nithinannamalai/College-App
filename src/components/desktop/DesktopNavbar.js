@@ -29,7 +29,7 @@ export const DesktopNavbar = ({
         { key: 'academics', label: 'Curriculum', icon: _jsx(BookOpen, { size: 14 }) },
         { key: 'timetable', label: 'Timetable', icon: _jsx(Clock, { size: 14 }) },
         { key: 'request-letters', label: 'OD Requests', icon: _jsx(FileText, { size: 14 }) },
-        { key: 'ai', label: 'AI Tutor', icon: _jsx(Bot, { size: 14 }), badge: '2.0' },
+        { key: 'ai', label: 'AI Trainer', icon: _jsx(Sparkles, { size: 14 }), badge: 'DeepTutor' },
     ];
 
     return (

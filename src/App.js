@@ -6,14 +6,14 @@ import { supabase } from './services/supabaseClient';
 import { dbService } from './services/db';
 import appLogo from './assets/app-logo.png';
 import { APP_CATEGORIES } from './routes/appRoutes';
-import { ProfileDocs, AttendanceTracker, NptelTracker, AcademicsTracker, CareerHub, AcademicCalendar, AIChatbot, SignInPage, StudentDetailsCard, Timetable, RequestLetters, LabSeatFinder, GpaCalculator, AnnouncementBanner, DesktopLandingPage, DesktopLoginPage, DesktopSidebar, DesktopVisionaDashboard, DesktopPageWrapper, DesktopNavbar, DesktopCareerHub, DesktopAttendance, DesktopTimetable, DesktopRequestLetters, DesktopAcademics, DesktopLabFinder, DesktopProfileDocs, DesktopStudentManager, DesktopAnnouncements, DesktopCalendarCourses, DesktopNptelTracker, DesktopPuzzleGames, MobileLandingPage, PuzzleGames, StudentManager, TaskList, BugReport, LoadingScreen } from './components';
+import { ProfileDocs, AttendanceTracker, NptelTracker, AcademicsTracker, CareerHub, AcademicCalendar, AIChatbot, SignInPage, StudentDetailsCard, Timetable, RequestLetters, LabSeatFinder, GpaCalculator, AnnouncementBanner, DesktopLandingPage, DesktopLoginPage, DesktopSidebar, DesktopVisionaDashboard, DesktopPageWrapper, DesktopNavbar, DesktopCareerHub, DesktopAttendance, DesktopTimetable, DesktopRequestLetters, DesktopAcademics, DesktopLabFinder, DesktopProfileDocs, DesktopStudentManager, DesktopAnnouncements, DesktopCalendarCourses, DesktopNptelTracker, DesktopPuzzleGames, DesktopAiTrainer, MobileLandingPage, PuzzleGames, StudentManager, TaskList, BugReport, LoadingScreen } from './components';
 import { Zap, Menu, X, Search, Bell, User, LogOut, ChevronRight, BookOpen, Calendar, GraduationCap, Award, FileText, UserCheck, Inbox, Map, Phone, Sparkles, Home, Gamepad2, CheckCircle2, Plus, Trash2, Pencil, RefreshCw, Compass, Bot, Clock, Layers, ShieldCheck, Bug, Shield } from 'lucide-react';
 import './App.css';
 
 
 const getTabMetadata = (tab) => {
     switch (tab) {
-        case 'ai': return { title: "24/7 AI Neural Tutor", category: "Intelligence", subtitle: "Gemini-powered circuit & theory mentor", icon: _jsx(Bot, { size: 22 }) };
+        case 'ai': return { title: "Personal AI Trainer", category: "Intelligence", subtitle: "DeepTutor Lifelong Personalized Tutoring Engine", icon: _jsx(Sparkles, { size: 22 }) };
         case 'announcements': return { title: "Notice Board & Circulars", category: "Campus", subtitle: "Official Department & College notifications", icon: _jsx(Bell, { size: 22 }) };
         case 'profile-details': return { title: "Smart Pass & Academic Dossier", category: "Profile", subtitle: "Official student identity & verification pass", icon: _jsx(ShieldCheck, { size: 22 }) };
         case 'profile': return { title: "Student Document Vault", category: "Profile", subtitle: "Verified mark sheets and bonafide records", icon: _jsx(FileText, { size: 22 }) };
@@ -818,7 +818,7 @@ function App() {
                     const tabMeta = getTabMetadata(currentTab);
                     if (isDesktop) {
                         const desktopTabBody = [
-                            currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }),
+                            currentTab === 'ai' && _jsx(DesktopAiTrainer, { currentUser: currentUser, isAdmin: isAdmin, onBack: handleCloseModal }),
                             currentTab === 'career' && _jsx(DesktopCareerHub, {}),
                             currentTab === 'attendance' && _jsx(DesktopAttendance, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai R', isAdmin: isAdmin }),
                             currentTab === 'timetable' && _jsx(DesktopTimetable, { isAdmin: isAdmin, semester: 3 }),
