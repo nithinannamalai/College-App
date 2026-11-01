@@ -4,7 +4,7 @@ import {
     Sparkles, Bot, Send, RotateCcw, ExternalLink, Play, 
     BookOpen, CheckCircle2, Award, Zap, Cpu, Terminal, 
     Volume2, Copy, Check, ChevronRight, HelpCircle, Layers,
-    Maximize2, AlertCircle, RefreshCw
+    Maximize2, AlertCircle, RefreshCw, Minimize2
 } from 'lucide-react';
 import { DesktopPageWrapper } from './DesktopPageWrapper';
 
@@ -61,7 +61,10 @@ const PRACTICE_QUESTIONS = [
 ];
 
 export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
-    const [activeSection, setActiveSection] = useState('chat'); // 'chat' | 'workspace' | 'quiz' | 'library'
+    // Default directly to the live DeepTutor App!
+    const [activeSection, setActiveSection] = useState('app'); // 'app' | 'chat' | 'quiz' | 'library'
+    const [iframeKey, setIframeKey] = useState(0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
@@ -72,7 +75,6 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
     const [inputText, setInputText] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [copiedIndex, setCopiedIndex] = useState(null);
-    const [localServerStatus, setLocalServerStatus] = useState('checking'); // 'online' | 'offline' | 'checking'
     const [quizAnswers, setQuizAnswers] = useState({});
     const [quizSubmitted, setQuizSubmitted] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState('All Core EEE');
@@ -82,24 +84,6 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isGenerating]);
-
-    // Check if local DeepTutor server is running on port 3782
-    const checkServerHealth = async () => {
-        setLocalServerStatus('checking');
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
-            await fetch('http://localhost:3782', { mode: 'no-cors', signal: controller.signal });
-            clearTimeout(timeoutId);
-            setLocalServerStatus('online');
-        } catch {
-            setLocalServerStatus('offline');
-        }
-    };
-
-    useEffect(() => {
-        checkServerHealth();
-    }, []);
 
     // Socratic response generator
     const generateSocraticResponse = (query) => {
@@ -227,188 +211,31 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
             icon: _jsx(Sparkles, { size: 22, style: { color: '#7c3aed' } }),
             onBack: onBack,
             children: _jsxs("div", {
-                style: { display: 'flex', flexDirection: 'column', gap: 20 },
+                style: { display: 'flex', flexDirection: 'column', gap: 18 },
                 children: [
-                    // ── TOP METRIC STRIP ──
-                    _jsxs("div", {
-                        style: {
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(4, 1fr)',
-                            gap: 16
-                        },
-                        children: [
-                            _jsxs("div", {
-                                style: {
-                                    background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
-                                    padding: '16px 20px',
-                                    borderRadius: 18,
-                                    border: '1.5px solid #ddd6fe',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 14
-                                },
-                                children: [
-                                    _jsx("div", {
-                                        style: {
-                                            width: 44,
-                                            height: 44,
-                                            borderRadius: 12,
-                                            background: '#7c3aed',
-                                            color: '#ffffff',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        },
-                                        children: _jsx(Bot, { size: 22 })
-                                    }),
-                                    _jsxs("div", {
-                                        children: [
-                                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#6d28d9', textTransform: 'uppercase' }, children: "Active Engine" }),
-                                            _jsx("div", { style: { fontSize: 16, fontWeight: 950, color: '#0f172a' }, children: "DeepTutor v1.7.1" }),
-                                            _jsx("div", { style: { fontSize: 11, color: '#475569', fontWeight: 600 }, children: "Socratic Guided Mode" })
-                                        ]
-                                    })
-                                ]
-                            }),
-
-                            _jsxs("div", {
-                                style: {
-                                    background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-                                    padding: '16px 20px',
-                                    borderRadius: 18,
-                                    border: '1.5px solid #bbf7d0',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 14
-                                },
-                                children: [
-                                    _jsx("div", {
-                                        style: {
-                                            width: 44,
-                                            height: 44,
-                                            borderRadius: 12,
-                                            background: '#16a34a',
-                                            color: '#ffffff',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        },
-                                        children: _jsx(Cpu, { size: 22 })
-                                    }),
-                                    _jsxs("div", {
-                                        children: [
-                                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#15803d', textTransform: 'uppercase' }, children: "Domain Intelligence" }),
-                                            _jsx("div", { style: { fontSize: 16, fontWeight: 950, color: '#0f172a' }, children: "EEE Autonomous" }),
-                                            _jsx("div", { style: { fontSize: 11, color: '#475569', fontWeight: 600 }, children: "Circuits · Machines · Power" })
-                                        ]
-                                    })
-                                ]
-                            }),
-
-                            _jsxs("div", {
-                                style: {
-                                    background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
-                                    padding: '16px 20px',
-                                    borderRadius: 18,
-                                    border: '1.5px solid #bfdbfe',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 14
-                                },
-                                children: [
-                                    _jsx("div", {
-                                        style: {
-                                            width: 44,
-                                            height: 44,
-                                            borderRadius: 12,
-                                            background: '#0284c7',
-                                            color: '#ffffff',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        },
-                                        children: _jsx(Terminal, { size: 22 })
-                                    }),
-                                    _jsxs("div", {
-                                        children: [
-                                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#0369a1', textTransform: 'uppercase' }, children: "Local Server Status" }),
-                                            _jsxs("div", {
-                                                style: { display: 'flex', alignItems: 'center', gap: 6 },
-                                                children: [
-                                                    _jsx("span", {
-                                                        style: {
-                                                            width: 8,
-                                                            height: 8,
-                                                            borderRadius: '50%',
-                                                            background: localServerStatus === 'online' ? '#16a34a' : localServerStatus === 'checking' ? '#f59e0b' : '#94a3b8'
-                                                        }
-                                                    }),
-                                                    _jsx("span", { style: { fontSize: 15, fontWeight: 950, color: '#0f172a' }, children: localServerStatus === 'online' ? "Port 3782 Live" : localServerStatus === 'checking' ? "Probing..." : "Ready to Start" })
-                                                ]
-                                            }),
-                                            _jsx("div", { style: { fontSize: 11, color: '#475569', fontWeight: 600 }, children: "deeptutor folder integrated" })
-                                        ]
-                                    })
-                                ]
-                            }),
-
-                            _jsxs("div", {
-                                style: {
-                                    background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
-                                    padding: '16px 20px',
-                                    borderRadius: 18,
-                                    border: '1.5px solid #fde68a',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 14
-                                },
-                                children: [
-                                    _jsx("div", {
-                                        style: {
-                                            width: 44,
-                                            height: 44,
-                                            borderRadius: 12,
-                                            background: '#d97706',
-                                            color: '#ffffff',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        },
-                                        children: _jsx(Award, { size: 22 })
-                                    }),
-                                    _jsxs("div", {
-                                        children: [
-                                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#b45309', textTransform: 'uppercase' }, children: "Learning Mastery" }),
-                                            _jsx("div", { style: { fontSize: 16, fontWeight: 950, color: '#0f172a' }, children: "Level 4 · 94%" }),
-                                            _jsx("div", { style: { fontSize: 11, color: '#475569', fontWeight: 600 }, children: "Continuous Assessment Ready" })
-                                        ]
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
-
-                    // ── SECTION NAVIGATION TABS ──
+                    // ── SECTION NAVIGATION TABS & ACTION STRIP ──
                     _jsxs("div", {
                         style: {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             background: '#ffffff',
-                            padding: '10px 14px',
-                            borderRadius: 16,
+                            padding: '10px 16px',
+                            borderRadius: 18,
                             border: '1.5px solid #e2e8f0',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+                            flexWrap: 'wrap',
+                            gap: 12
                         },
                         children: [
                             _jsxs("div", {
-                                style: { display: 'flex', gap: 8 },
+                                style: { display: 'flex', alignItems: 'center', gap: 8 },
                                 children: [
                                     [
-                                        { id: 'chat', label: 'Interactive Socratic Chat', icon: _jsx(Bot, { size: 15 }) },
-                                        { id: 'workspace', label: 'DeepTutor Workspace Engine', icon: _jsx(Terminal, { size: 15 }) },
-                                        { id: 'quiz', label: 'Diagnostic Assessment Quiz', icon: _jsx(Award, { size: 15 }) },
-                                        { id: 'library', label: 'EEE Formula & Theory Vault', icon: _jsx(BookOpen, { size: 15 }) },
+                                        { id: 'app', label: 'DeepTutor App (Live)', icon: _jsx(Sparkles, { size: 15, style: { color: activeSection === 'app' ? '#ffffff' : '#7c3aed' } }) },
+                                        { id: 'chat', label: 'Socratic EEE Chatbot', icon: _jsx(Bot, { size: 15 }) },
+                                        { id: 'quiz', label: 'Diagnostic Assessment', icon: _jsx(Award, { size: 15 }) },
+                                        { id: 'library', label: 'Formula & Theory Vault', icon: _jsx(BookOpen, { size: 15 }) },
                                     ].map(tab => (
                                         _jsxs("button", {
                                             key: tab.id,
@@ -421,11 +248,12 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                                                 padding: '9px 18px',
                                                 borderRadius: 12,
                                                 border: activeSection === tab.id ? '1.5px solid #7c3aed' : '1px solid transparent',
-                                                background: activeSection === tab.id ? '#7c3aed' : '#f8fafc',
+                                                background: activeSection === tab.id ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' : '#f8fafc',
                                                 color: activeSection === tab.id ? '#ffffff' : '#475569',
                                                 fontSize: 12.5,
                                                 fontWeight: 800,
                                                 cursor: 'pointer',
+                                                boxShadow: activeSection === tab.id ? '0 4px 14px rgba(124, 58, 237, 0.25)' : 'none',
                                                 transition: 'all 0.18s ease'
                                             },
                                             children: [
@@ -437,32 +265,52 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                                 ]
                             }),
 
-                            // Subject Filter
+                            // Right controls: DeepTutor Status & Direct Actions
                             _jsxs("div", {
                                 style: { display: 'flex', alignItems: 'center', gap: 10 },
                                 children: [
-                                    _jsx("span", { style: { fontSize: 12, fontWeight: 700, color: '#64748b' }, children: "Focus:" }),
-                                    _jsxs("select", {
-                                        value: selectedSubject,
-                                        onChange: (e) => setSelectedSubject(e.target.value),
+                                    _jsxs("div", {
                                         style: {
-                                            padding: '8px 14px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 7,
+                                            padding: '6px 14px',
+                                            borderRadius: 99,
+                                            background: '#ecfdf5',
+                                            border: '1px solid #a7f3d0',
+                                            fontSize: 12,
+                                            fontWeight: 800,
+                                            color: '#065f46'
+                                        },
+                                        children: [
+                                            _jsx("span", {
+                                                style: { width: 8, height: 8, borderRadius: '50%', background: '#16a34a', boxShadow: '0 0 8px #16a34a' }
+                                            }),
+                                            "DeepTutor Engine Live (Port 3782)"
+                                        ]
+                                    }),
+
+                                    _jsxs("a", {
+                                        href: "http://localhost:3782/chat",
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                        style: {
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 6,
+                                            padding: '7px 14px',
                                             borderRadius: 10,
                                             border: '1.5px solid #cbd5e1',
                                             background: '#ffffff',
+                                            color: '#0f172a',
                                             fontSize: 12,
                                             fontWeight: 800,
-                                            color: '#0f172a',
+                                            textDecoration: 'none',
                                             cursor: 'pointer'
                                         },
                                         children: [
-                                            _jsx("option", { value: "All Core EEE", children: "All Core EEE" }),
-                                            _jsx("option", { value: "Electrical Machines", children: "Electrical Machines" }),
-                                            _jsx("option", { value: "Power Systems", children: "Power Systems" }),
-                                            _jsx("option", { value: "Power Electronics", children: "Power Electronics" }),
-                                            _jsx("option", { value: "Control Systems", children: "Control Systems" }),
-                                            _jsx("option", { value: "Embedded Systems", children: "Embedded Systems" }),
-                                            _jsx("option", { value: "GATE 2027 EEE", children: "GATE 2027 EEE" })
+                                            _jsx(ExternalLink, { size: 13 }),
+                                            "Open in New Window"
                                         ]
                                     })
                                 ]
@@ -470,7 +318,139 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                         ]
                     }),
 
-                    // ── VIEW 1: SOCRATIC CHAT TRAINER ──
+                    // ── VIEW 1: LIVE DEEPTUTOR EMBEDDED APP (PRIMARY) ──
+                    activeSection === 'app' && (
+                        _jsxs("div", {
+                            style: {
+                                background: '#ffffff',
+                                borderRadius: 22,
+                                border: '1.5px solid #e2e8f0',
+                                boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
+                                overflow: 'hidden',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                minHeight: isFullscreen ? '100vh' : 820,
+                                position: isFullscreen ? 'fixed' : 'relative',
+                                top: isFullscreen ? 0 : 'auto',
+                                left: isFullscreen ? 0 : 'auto',
+                                right: isFullscreen ? 0 : 'auto',
+                                bottom: isFullscreen ? 0 : 'auto',
+                                zIndex: isFullscreen ? 99999 : 1
+                            },
+                            children: [
+                                // Top App Toolbar
+                                _jsxs("div", {
+                                    style: {
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '12px 20px',
+                                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+                                        color: '#ffffff'
+                                    },
+                                    children: [
+                                        _jsxs("div", {
+                                            style: { display: 'flex', alignItems: 'center', gap: 12 },
+                                            children: [
+                                                _jsx("div", {
+                                                    style: { width: 10, height: 10, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 10px #22c55e' }
+                                                }),
+                                                _jsx("span", { style: { fontSize: 13.5, fontWeight: 950, color: '#f8fafc' }, children: "DeepTutor Interactive Workspace" }),
+                                                _jsx("span", { style: { fontSize: 11, background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', padding: '2px 8px', borderRadius: 99, fontWeight: 800 }, children: "v1.7.1 · Socratic Model" })
+                                            ]
+                                        }),
+                                        _jsxs("div", {
+                                            style: { display: 'flex', alignItems: 'center', gap: 10 },
+                                            children: [
+                                                _jsxs("button", {
+                                                    type: "button",
+                                                    onClick: () => setIframeKey(k => k + 1),
+                                                    style: {
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 6,
+                                                        padding: '6px 12px',
+                                                        borderRadius: 8,
+                                                        border: '1px solid rgba(255,255,255,0.2)',
+                                                        background: 'rgba(255,255,255,0.08)',
+                                                        color: '#ffffff',
+                                                        fontSize: 12,
+                                                        fontWeight: 800,
+                                                        cursor: 'pointer'
+                                                    },
+                                                    children: [
+                                                        _jsx(RefreshCw, { size: 13 }),
+                                                        "Reload App"
+                                                    ]
+                                                }),
+                                                _jsxs("button", {
+                                                    type: "button",
+                                                    onClick: () => setIsFullscreen(f => !f),
+                                                    style: {
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 6,
+                                                        padding: '6px 12px',
+                                                        borderRadius: 8,
+                                                        border: '1px solid rgba(255,255,255,0.2)',
+                                                        background: 'rgba(255,255,255,0.08)',
+                                                        color: '#ffffff',
+                                                        fontSize: 12,
+                                                        fontWeight: 800,
+                                                        cursor: 'pointer'
+                                                    },
+                                                    children: [
+                                                        isFullscreen ? _jsx(Minimize2, { size: 13 }) : _jsx(Maximize2, { size: 13 }),
+                                                        isFullscreen ? "Exit Fullscreen" : "Fullscreen"
+                                                    ]
+                                                }),
+                                                _jsxs("a", {
+                                                    href: "http://localhost:3782/chat",
+                                                    target: "_blank",
+                                                    rel: "noopener noreferrer",
+                                                    style: {
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 6,
+                                                        padding: '6px 14px',
+                                                        borderRadius: 8,
+                                                        border: 'none',
+                                                        background: '#38bdf8',
+                                                        color: '#0f172a',
+                                                        fontSize: 12,
+                                                        fontWeight: 900,
+                                                        cursor: 'pointer',
+                                                        textDecoration: 'none'
+                                                    },
+                                                    children: [
+                                                        _jsx(ExternalLink, { size: 13 }),
+                                                        "Pop-out"
+                                                    ]
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+
+                                // Live DeepTutor Application Viewport
+                                _jsx("iframe", {
+                                    key: iframeKey,
+                                    src: "http://localhost:3782/chat",
+                                    title: "DeepTutor Application",
+                                    style: {
+                                        width: '100%',
+                                        flex: 1,
+                                        minHeight: isFullscreen ? 'calc(100vh - 54px)' : 760,
+                                        border: 'none',
+                                        background: '#ffffff'
+                                    },
+                                    allow: "clipboard-read; clipboard-write; microphone; camera"
+                                })
+                            ]
+                        })
+                    ),
+
+                    // ── VIEW 2: SOCRATIC CHAT TRAINER ──
                     activeSection === 'chat' && (
                         _jsxs("div", {
                             style: {
@@ -590,6 +570,7 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                                                                         children: [
                                                                             _jsx("span", { children: msg.time }),
                                                                             _jsxs("button", {
+                                                                                type: "button",
                                                                                 onClick: () => handleCopy(msg.content, i),
                                                                                 style: { background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 10.5, fontWeight: 700 },
                                                                                 children: [
@@ -743,227 +724,9 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                                                     ))
                                                 })
                                             ]
-                                        }),
-
-                                        // DeepTutor Quick Connection Box
-                                        _jsxs("div", {
-                                            style: {
-                                                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-                                                borderRadius: 20,
-                                                padding: '20px',
-                                                color: '#ffffff',
-                                                boxShadow: '0 8px 24px rgba(15, 23, 42, 0.15)'
-                                            },
-                                            children: [
-                                                _jsxs("div", {
-                                                    style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },
-                                                    children: [
-                                                        _jsx("span", { style: { fontSize: 13, fontWeight: 950, color: '#38bdf8' }, children: "⚡ DeepTutor Engine" }),
-                                                        _jsx("span", {
-                                                            style: {
-                                                                fontSize: 10,
-                                                                fontWeight: 900,
-                                                                padding: '2px 8px',
-                                                                borderRadius: 99,
-                                                                background: localServerStatus === 'online' ? '#16a34a' : 'rgba(255,255,255,0.15)',
-                                                                color: '#ffffff'
-                                                            },
-                                                            children: localServerStatus === 'online' ? "ONLINE" : "STANDBY"
-                                                        })
-                                                    ]
-                                                }),
-                                                _jsx("p", { style: { fontSize: 11.5, color: '#94a3b8', lineHeight: 1.4, margin: '0 0 14px 0' }, children: "Run the full standalone DeepTutor UI or keep chatting directly inside this integrated interface." }),
-                                                _jsxs("div", {
-                                                    style: { display: 'flex', gap: 8 },
-                                                    children: [
-                                                        _jsxs("button", {
-                                                            onClick: () => setActiveSection('workspace'),
-                                                            style: {
-                                                                flex: 1,
-                                                                padding: '9px 12px',
-                                                                borderRadius: 10,
-                                                                border: 'none',
-                                                                background: '#38bdf8',
-                                                                color: '#0f172a',
-                                                                fontWeight: 900,
-                                                                fontSize: 11.5,
-                                                                cursor: 'pointer'
-                                                            },
-                                                            children: [
-                                                                "Open Workspace"
-                                                            ]
-                                                        }),
-                                                        _jsx("button", {
-                                                            onClick: checkServerHealth,
-                                                            style: {
-                                                                padding: '9px 12px',
-                                                                borderRadius: 10,
-                                                                border: '1px solid rgba(255,255,255,0.2)',
-                                                                background: 'rgba(255,255,255,0.08)',
-                                                                color: '#ffffff',
-                                                                fontWeight: 800,
-                                                                fontSize: 11.5,
-                                                                cursor: 'pointer'
-                                                            },
-                                                            children: _jsx(RefreshCw, { size: 14 })
-                                                        })
-                                                    ]
-                                                })
-                                            ]
                                         })
                                     ]
                                 })
-                            ]
-                        })
-                    ),
-
-                    // ── VIEW 2: DEEPTUTOR LOCAL WORKSPACE ENGINE ──
-                    activeSection === 'workspace' && (
-                        _jsxs("div", {
-                            style: {
-                                background: '#ffffff',
-                                borderRadius: 22,
-                                padding: '28px',
-                                border: '1.5px solid #e2e8f0',
-                                boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: 20
-                            },
-                            children: [
-                                _jsxs("div", {
-                                    style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
-                                    children: [
-                                        _jsxs("div", {
-                                            children: [
-                                                _jsx("h3", { style: { fontSize: 18, fontWeight: 950, color: '#0f172a', margin: '0 0 4px 0' }, children: "DeepTutor Workspace Architecture" }),
-                                                _jsx("p", { style: { fontSize: 12.5, color: '#64748b', margin: 0 }, children: "Integrated directly from College-App-main/deeptutor codebase with Next.js frontend and Python Fast-API backend." })
-                                            ]
-                                        }),
-                                        _jsxs("div", {
-                                            style: { display: 'flex', gap: 10 },
-                                            children: [
-                                                _jsxs("button", {
-                                                    onClick: checkServerHealth,
-                                                    style: {
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: 6,
-                                                        padding: '9px 16px',
-                                                        borderRadius: 12,
-                                                        border: '1.5px solid #cbd5e1',
-                                                        background: '#ffffff',
-                                                        fontSize: 12,
-                                                        fontWeight: 800,
-                                                        color: '#0f172a',
-                                                        cursor: 'pointer'
-                                                    },
-                                                    children: [
-                                                        _jsx(RefreshCw, { size: 14 }),
-                                                        "Check Port 3782"
-                                                    ]
-                                                }),
-                                                _jsxs("a", {
-                                                    href: "http://localhost:3782",
-                                                    target: "_blank",
-                                                    rel: "noopener noreferrer",
-                                                    style: {
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: 6,
-                                                        padding: '9px 18px',
-                                                        borderRadius: 12,
-                                                        border: 'none',
-                                                        background: '#0284c7',
-                                                        color: '#ffffff',
-                                                        fontSize: 12,
-                                                        fontWeight: 900,
-                                                        cursor: 'pointer',
-                                                        textDecoration: 'none'
-                                                    },
-                                                    children: [
-                                                        _jsx(ExternalLink, { size: 14 }),
-                                                        "Launch http://localhost:3782"
-                                                    ]
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-
-                                // Instructions Card
-                                _jsxs("div", {
-                                    style: {
-                                        background: '#0f172a',
-                                        borderRadius: 16,
-                                        padding: '20px 24px',
-                                        color: '#f8fafc',
-                                        fontFamily: 'monospace',
-                                        fontSize: 12.5,
-                                        lineHeight: 1.6
-                                    },
-                                    children: [
-                                        _jsx("div", { style: { color: '#38bdf8', fontWeight: 900, marginBottom: 8, fontSize: 13 }, children: "💻 How to Launch DeepTutor Server from Terminal:" }),
-                                        _jsx("div", { children: "# Step 1: Open Terminal in this project and launch Backend" }),
-                                        _jsx("div", { style: { color: '#a7f3d0' }, children: "cd deeptutor; .\\scripts\\start_backend.bat" }),
-                                        _jsx("div", { style: { margin: '8px 0', color: '#64748b' }, children: "--------------------------------------------------" }),
-                                        _jsx("div", { children: "# Step 2: In a second terminal, launch Frontend Next.js Web UI" }),
-                                        _jsx("div", { style: { color: '#a7f3d0' }, children: "cd deeptutor; .\\scripts\\start_frontend.bat" }),
-                                        _jsx("div", { style: { margin: '8px 0', color: '#64748b' }, children: "--------------------------------------------------" }),
-                                        _jsx("div", { style: { color: '#fde047' }, children: "Backend API: http://localhost:8001 | Web UI: http://localhost:3782" })
-                                    ]
-                                }),
-
-                                // Live Frame Preview or Placeholder
-                                localServerStatus === 'online' ? (
-                                    _jsx("iframe", {
-                                        src: "http://localhost:3782",
-                                        title: "DeepTutor Workspace",
-                                        style: {
-                                            width: '100%',
-                                            height: 600,
-                                            border: '2px solid #e2e8f0',
-                                            borderRadius: 16,
-                                            background: '#ffffff'
-                                        }
-                                    })
-                                ) : (
-                                    _jsxs("div", {
-                                        style: {
-                                            border: '2px dashed #cbd5e1',
-                                            borderRadius: 18,
-                                            padding: '48px 24px',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: 12,
-                                            background: '#f8fafc'
-                                        },
-                                        children: [
-                                            _jsx(Terminal, { size: 40, style: { color: '#64748b' } }),
-                                            _jsx("div", { style: { fontSize: 16, fontWeight: 900, color: '#0f172a' }, children: "DeepTutor Local Server is on Standby" }),
-                                            _jsx("div", { style: { fontSize: 13, color: '#64748b', maxWidth: 480, textAlign: 'center' }, children: "Launch start_frontend.bat inside the deeptutor folder to load the full multi-modal canvas, notebook editor, and graph visualizer right inside this window." }),
-                                            _jsxs("button", {
-                                                onClick: () => setActiveSection('chat'),
-                                                style: {
-                                                    padding: '10px 20px',
-                                                    borderRadius: 12,
-                                                    border: 'none',
-                                                    background: '#7c3aed',
-                                                    color: '#ffffff',
-                                                    fontWeight: 900,
-                                                    fontSize: 12.5,
-                                                    cursor: 'pointer',
-                                                    marginTop: 8
-                                                },
-                                                children: [
-                                                    "Switch to Integrated AI Chatbot"
-                                                ]
-                                            })
-                                        ]
-                                    })
-                                )
                             ]
                         })
                     ),
@@ -1248,6 +1011,7 @@ export const DesktopAiTrainer = ({ currentUser, isAdmin = false, onBack }) => {
                                                 children: [
                                                     _jsx("span", { children: card.formula }),
                                                     _jsx("button", {
+                                                        type: "button",
                                                         onClick: () => handleCopy(card.formula, `lib-${idx}`),
                                                         style: { background: 'none', border: 'none', color: '#64748b', cursor: 'pointer' },
                                                         children: copiedIndex === `lib-${idx}` ? _jsx(Check, { size: 14, style: { color: '#16a34a' } }) : _jsx(Copy, { size: 14 })
