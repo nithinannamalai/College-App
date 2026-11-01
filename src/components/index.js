@@ -14,6 +14,7 @@ export { AnnouncementBanner } from './common/AnnouncementBanner';
 export { DashboardGrid } from './common/DashboardGrid';
 export { SplashScreen } from './common/SplashScreen';
 export { StudentDetailsCard } from './common/StudentDetailsCard';
+export { LoadingScreen } from './common/LoadingScreen';
 // Services & Tools Components
 export { AttendanceTracker } from './services/AttendanceTracker';
 export { CareerHub } from './services/CareerHub';
