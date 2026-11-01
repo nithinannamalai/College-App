@@ -24,3 +24,4 @@ export const LoadingScreen = ({ message = 'Synchronizing Academic Workspace...',
         })
     );
 };
+
