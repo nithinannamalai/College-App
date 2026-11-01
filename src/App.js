@@ -796,66 +796,68 @@ function App() {
                     })
                 }))) : (() => {
                     const tabMeta = getTabMetadata(currentTab);
-                    const tabBody = [currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }), currentTab === 'announcements' && (_jsx("div", { style: { background: 'var(--bg-primary)', borderRadius: 16, border: '1px solid var(--card-border)', padding: 16 }, children: _jsx(AnnouncementBanner, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }) })), currentTab === 'profile-details' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }), currentTab === 'profile' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "documents" }), currentTab === 'certificates' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "certificates" }), currentTab === 'request-letters' && _jsx(RequestLetters, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }), currentTab === 'lab-finder' && _jsx(LabSeatFinder, { onBack: handleCloseModal, rollNo: currentUser?.rollNo || '71812503104' }), currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }), currentTab === 'attendance' && _jsx(AttendanceTracker, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'nptel' && _jsx(NptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'academics' && _jsx(AcademicsTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'career' && _jsx(CareerHub, { onBack: handleCloseModal, isAdmin: isAdmin }), currentTab === 'courses' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "courses", initialEditMode: academicInitEdit }), currentTab === 'calendar' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "calendar", initialEditMode: academicInitEdit }), currentTab === 'timetable' && _jsx(Timetable, { onBack: handleCloseModal, isAdmin: isAdmin, semester: 3 }), currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }), currentTab === 'puzzle-games' && _jsx(PuzzleGames, { onBack: handleCloseModal }), currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })), currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'student-manager' && _jsx(StudentManager, { onBack: handleCloseModal, isAdmin: isAdmin, currentUser: currentUser }), currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin }), !['ai', 'announcements', 'profile-details', 'profile', 'certificates', 'request-letters', 'lab-finder', 'cgpa-calc', 'attendance', 'nptel', 'academics', 'career', 'courses', 'calendar', 'timetable', 'tasks', 'puzzle-games', 'suggestion', 'campus-map', 'college-rules', 'faculty', 'student-manager', 'bug-report'].includes(currentTab) && (_jsxs("div", {
-                        className: "not-found-view glass-luxury-card", style: { margin: '24px auto', maxWidth: 500, borderRadius: 28, padding: '36px 28px', border: '1.5px solid rgba(0,82,204,0.15)' }, children: [
-                            _jsx("div", { style: { fontSize: 52, marginBottom: 12, animation: 'floatMist 4s ease-in-out infinite alternate' }, children: "\uD83E\uDDED" }),
-                            _jsx("h2", { style: { fontSize: 22, fontWeight: 900, color: 'var(--text-main)', margin: '0 0 6px 0' }, children: "404 \u00B7 Feature Not Found" }),
-                            _jsxs("p", {
-                                style: { fontSize: 13, color: 'var(--text-muted)', margin: '0 0 20px 0', lineHeight: 1.5 }, children: [
-                                    "The requested section ",
-                                    _jsxs("strong", { style: { color: 'var(--accent-blue)', background: 'rgba(0,82,204,0.08)', padding: '2px 8px', borderRadius: 6 }, children: ["#", currentTab] }),
-                                    " is either relocated or does not exist."
-                                ]
-                            }),
-                            _jsx("div", {
-                                style: { width: '100%', marginBottom: 18 }, children: [
-                                    _jsxs("div", {
-                                        style: { display: 'flex', gap: 8, padding: '8px 12px', background: 'var(--bg-secondary)', borderRadius: 12, border: '1px solid var(--card-border)' }, children: [
-                                            _jsx(Search, { size: 16, style: { color: 'var(--text-muted)' } }),
-                                            _jsx("input", {
-                                                type: "text",
-                                                placeholder: "Search available modules (e.g. attendance)...",
-                                                value: searchQuery,
-                                                onChange: e => setSearchQuery(e.target.value),
-                                                onKeyDown: e => {
-                                                    if (e.key === 'Enter' && searchResults.length > 0) {
-                                                        handleCardClick(searchResults[0].key);
-                                                    }
-                                                },
-                                                style: { border: 'none', background: 'transparent', outline: 'none', fontSize: 12.5, width: '100%', color: 'var(--text-main)' }
-                                            })
-                                        ]
-                                    })
-                                ]
-                            }),
-                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }, children: "Quick Jump Destinations" }),
-                            _jsxs("div", {
-                                style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, width: '100%', marginBottom: 20 }, children: [
-                                    _jsxs("button", { onClick: () => handleCardClick('home'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#1d4ed8', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(Home, { size: 15 }), " Home Hub"] }),
-                                    _jsxs("button", { onClick: () => handleCardClick('academics'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(GraduationCap, { size: 15 }), " Academics"] }),
-                                    _jsxs("button", { onClick: () => handleCardClick('attendance'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fed7aa', background: '#fff7ed', color: '#c2410c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(UserCheck, { size: 15 }), " Attendance"] }),
-                                    _jsxs("button", { onClick: () => handleCardClick('bug-report'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fecaca', background: '#fef2f2', color: '#b91c1c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(FileText, { size: 15 }), " Report Issue"] })
-                                ]
-                            }),
-                            _jsx("button", { className: "cta-button", onClick: () => handleCardClick('home'), style: { width: '100%' }, children: "Return to Dashboard" })
-                        ]
-                    }))
-                ];
-                return isDesktop ? (
-                    _jsx(DesktopPageWrapper, {
-                        title: tabMeta.title,
-                        category: tabMeta.category,
-                        subtitle: tabMeta.subtitle,
-                        icon: tabMeta.icon,
-                        onBack: handleCloseModal,
-                        children: tabBody
-                    })
-                ) : (
-                    _jsx("div", { className: "dedicated-page-view page-slide-enter", children: _jsx("div", { className: "dedicated-page-body", children: tabBody }) })
-                );
-            })()
+                    const tabBody = [currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }), currentTab === 'announcements' && (_jsx("div", { style: { background: 'var(--bg-primary)', borderRadius: 16, border: '1px solid var(--card-border)', padding: 16 }, children: _jsx(AnnouncementBanner, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }) })), currentTab === 'profile-details' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }), currentTab === 'profile' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "documents" }), currentTab === 'certificates' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "certificates" }), currentTab === 'request-letters' && _jsx(RequestLetters, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }), currentTab === 'lab-finder' && _jsx(LabSeatFinder, { onBack: handleCloseModal, rollNo: currentUser?.rollNo || '71812503104' }), currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }), currentTab === 'attendance' && _jsx(AttendanceTracker, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'nptel' && _js
+
+                        (NptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'academics' && _jsx(AcademicsTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'career' && _jsx(CareerHub, { onBack: handleCloseModal, isAdmin: isAdmin }), currentTab === 'courses' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "courses", initialEditMode: academicInitEdit }), currentTab === 'calendar' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "calendar", initialEditMode: academicInitEdit }), currentTab === 'timetable' && _jsx(Timetable, { onBack: handleCloseModal, isAdmin: isAdmin, semester: 3 }), currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }), currentTab === 'puzzle-games' && _jsx(PuzzleGames, { onBack: handleCloseModal }), currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })), currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'student-manager' && _jsx(StudentManager, { onBack: handleCloseModal, isAdmin: isAdmin, currentUser: currentUser }), currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin }), !['ai', 'announcements', 'profile-details', 'profile', 'certificates', 'request-letters', 'lab-finder', 'cgpa-calc', 'attendance', 'nptel', 'academics', 'career', 'courses', 'calendar', 'timetable', 'tasks', 'puzzle-games', 'suggestion', 'campus-map', 'college-rules', 'faculty', 'student-manager', 'bug-report'].includes(currentTab) && (_jsxs("div", {
+                            className: "not-found-view glass-luxury-card", style: { margin: '24px auto', maxWidth: 500, borderRadius: 28, padding: '36px 28px', border: '1.5px solid rgba(0,82,204,0.15)' }, children: [
+                                _jsx("div", { style: { fontSize: 52, marginBottom: 12, animation: 'floatMist 4s ease-in-out infinite alternate' }, children: "\uD83E\uDDED" }),
+                                _jsx("h2", { style: { fontSize: 22, fontWeight: 900, color: 'var(--text-main)', margin: '0 0 6px 0' }, children: "404 \u00B7 Feature Not Found" }),
+                                _jsxs("p", {
+                                    style: { fontSize: 13, color: 'var(--text-muted)', margin: '0 0 20px 0', lineHeight: 1.5 }, children: [
+                                        "The requested section ",
+                                        _jsxs("strong", { style: { color: 'var(--accent-blue)', background: 'rgba(0,82,204,0.08)', padding: '2px 8px', borderRadius: 6 }, children: ["#", currentTab] }),
+                                        " is either relocated or does not exist."
+                                    ]
+                                }),
+                                _jsx("div", {
+                                    style: { width: '100%', marginBottom: 18 }, children: [
+                                        _jsxs("div", {
+                                            style: { display: 'flex', gap: 8, padding: '8px 12px', background: 'var(--bg-secondary)', borderRadius: 12, border: '1px solid var(--card-border)' }, children: [
+                                                _jsx(Search, { size: 16, style: { color: 'var(--text-muted)' } }),
+                                                _jsx("input", {
+                                                    type: "text",
+                                                    placeholder: "Search available modules (e.g. attendance)...",
+                                                    value: searchQuery,
+                                                    onChange: e => setSearchQuery(e.target.value),
+                                                    onKeyDown: e => {
+                                                        if (e.key === 'Enter' && searchResults.length > 0) {
+                                                            handleCardClick(searchResults[0].key);
+                                                        }
+                                                    },
+                                                    style: { border: 'none', background: 'transparent', outline: 'none', fontSize: 12.5, width: '100%', color: 'var(--text-main)' }
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }, children: "Quick Jump Destinations" }),
+                                _jsxs("div", {
+                                    style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, width: '100%', marginBottom: 20 }, children: [
+                                        _jsxs("button", { onClick: () => handleCardClick('home'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#1d4ed8', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(Home, { size: 15 }), " Home Hub"] }),
+                                        _jsxs("button", { onClick: () => handleCardClick('academics'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(GraduationCap, { size: 15 }), " Academics"] }),
+                                        _jsxs("button", { onClick: () => handleCardClick('attendance'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fed7aa', background: '#fff7ed', color: '#c2410c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(UserCheck, { size: 15 }), " Attendance"] }),
+                                        _jsxs("button", { onClick: () => handleCardClick('bug-report'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fecaca', background: '#fef2f2', color: '#b91c1c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(FileText, { size: 15 }), " Report Issue"] })
+                                    ]
+                                }),
+                                _jsx("button", { className: "cta-button", onClick: () => handleCardClick('home'), style: { width: '100%' }, children: "Return to Dashboard" })
+                            ]
+                        }))
+                    ];
+                    return isDesktop ? (
+                        _jsx(DesktopPageWrapper, {
+                            title: tabMeta.title,
+                            category: tabMeta.category,
+                            subtitle: tabMeta.subtitle,
+                            icon: tabMeta.icon,
+                            onBack: handleCloseModal,
+                            children: tabBody
+                        })
+                    ) : (
+                        _jsx("div", { className: "dedicated-page-view page-slide-enter", children: _jsx("div", { className: "dedicated-page-body", children: tabBody }) })
+                    );
+                })()
             }), isPageLoading && _jsx(LoadingScreen, { message: "Transitioning workspace..." }), currentTab !== 'ai' && _jsx(AIChatbot, {}), !isDesktop && _jsxs("nav", { className: "mobile-bottom-nav", children: [_jsxs("button", { className: `bottom-tab-item ${activeBottomNav === 'home' && currentTab === null ? 'active' : ''}`, onClick: () => { setActiveBottomNav('home'); setCurrentTab(null); }, children: [_jsx(Home, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Home" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'academics' || currentTab === 'courses' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('academics'); handleCardClick('academics'); }, children: [_jsx(GraduationCap, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Academics" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'attendance' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('attendance'); handleCardClick('attendance'); }, children: [_jsx(UserCheck, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Attendance" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'puzzle-games' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('puzzle-games'); handleCardClick('puzzle-games'); }, children: [_jsx(Gamepad2, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Mind Games" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'profile-details' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('profile'); handleCardClick('profile-details'); }, children: [_jsx(User, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Profile" })] })] }), showSignInPage && (_jsx(SignInPage, { onClose: () => setShowSignInPage(false), onLoginSuccess: handleLoginSuccess, initialIsSignUp: authIsSignUp }))]
-})]
+        })]
     }));
 }
 // ── Suggestion Box Panel ──────────────────────────────
