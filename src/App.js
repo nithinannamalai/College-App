@@ -10,6 +10,36 @@ import { ProfileDocs, AttendanceTracker, NptelTracker, AcademicsTracker, CareerH
 import { Zap, Menu, X, Search, Bell, User, LogOut, ChevronRight, BookOpen, Calendar, GraduationCap, Award, FileText, UserCheck, Inbox, Map, Phone, Sparkles, Home, Gamepad2, CheckCircle2, Plus, Trash2, Pencil, RefreshCw, Compass, Bot, Clock, Layers, ShieldCheck, Bug, Shield } from 'lucide-react';
 import './App.css';
 
+
+const getTabMetadata = (tab) => {
+    switch (tab) {
+        case 'ai': return { title: "24/7 AI Neural Tutor", category: "Intelligence", subtitle: "Gemini-powered circuit & theory mentor", icon: _jsx(Bot, { size: 22 }) };
+        case 'announcements': return { title: "Notice Board & Circulars", category: "Campus", subtitle: "Official Department & College notifications", icon: _jsx(Bell, { size: 22 }) };
+        case 'profile-details': return { title: "Smart Pass & Academic Dossier", category: "Profile", subtitle: "Official student identity & verification pass", icon: _jsx(ShieldCheck, { size: 22 }) };
+        case 'profile': return { title: "Student Document Vault", category: "Profile", subtitle: "Verified mark sheets and bonafide records", icon: _jsx(FileText, { size: 22 }) };
+        case 'certificates': return { title: "Verified Credentials", category: "Profile", subtitle: "Co-curricular & symposium certificates", icon: _jsx(Award, { size: 22 }) };
+        case 'request-letters': return { title: "OD & Letter Requests", category: "Services", subtitle: "Instant on-duty & bonafide PDF generator", icon: _jsx(FileText, { size: 22 }) };
+        case 'lab-finder': return { title: "Lab Seat Finder", category: "Labs", subtitle: "Real-time workstation status & seat allocation", icon: _jsx(Compass, { size: 22 }) };
+        case 'cgpa-calc': return { title: "Target GPA Simulator", category: "Academics", subtitle: "Calculate and simulate semester CGPA", icon: _jsx(Award, { size: 22 }) };
+        case 'attendance': return { title: "Attendance Radar", category: "Academics", subtitle: "Period-by-period attendance tracking & safe buffer", icon: _jsx(UserCheck, { size: 22 }) };
+        case 'nptel': return { title: "NPTEL & Value-Added Courses", category: "Academics", subtitle: "IIT certification & honor credits tracking", icon: _jsx(Sparkles, { size: 22 }) };
+        case 'academics': return { title: "Curriculum & Syllabi", category: "Academics", subtitle: "Lecture notes, course outcomes & question banks", icon: _jsx(BookOpen, { size: 22 }) };
+        case 'career': return { title: "Career Hub & GATE", category: "Career", subtitle: "Core electrical engineering & software placement prep", icon: _jsx(Zap, { size: 22 }) };
+        case 'courses': return { title: "Department Course Catalog", category: "Academics", subtitle: "Autonomous regulation 2024-2028 syllabi", icon: _jsx(BookOpen, { size: 22 }) };
+        case 'calendar': return { title: "Academic Calendar", category: "Academics", subtitle: "College working days, tests & holidays", icon: _jsx(Calendar, { size: 22 }) };
+        case 'timetable': return { title: "Class Timetable", category: "Academics", subtitle: "Daily period grid & lab rotations", icon: _jsx(Clock, { size: 22 }) };
+        case 'tasks': return { title: "My Academic Tasks", category: "Services", subtitle: "Assignments, submissions & personal to-dos", icon: _jsx(CheckCircle2, { size: 22 }) };
+        case 'puzzle-games': return { title: "Mind & Brain Games", category: "Campus", subtitle: "Cognitive circuit & memory puzzles", icon: _jsx(Gamepad2, { size: 22 }) };
+        case 'suggestion': return { title: "Suggestion & Feedback Box", category: "Services", subtitle: "Submit feedback directly to department head", icon: _jsx(Inbox, { size: 22 }) };
+        case 'campus-map': return { title: "Interactive Campus Map", category: "Campus", subtitle: "Navigate buildings, labs & seminar halls", icon: _jsx(Map, { size: 22 }) };
+        case 'college-rules': return { title: "College Regulations", category: "Campus", subtitle: "Code of conduct, dress code & lab rules", icon: _jsx(Shield, { size: 22 }) };
+        case 'faculty': return { title: "Faculty Directory", category: "Campus", subtitle: "Faculty cabins, designations & contact", icon: _jsx(User, { size: 22 }) };
+        case 'student-manager': return { title: "Student Database Dossiers", category: "Faculty Portal", subtitle: "View, edit, or manage all department students", icon: _jsx(UserCheck, { size: 22 }) };
+        case 'bug-report': return { title: "Report an Issue", category: "Support", subtitle: "Submit technical bug reports & feedback", icon: _jsx(Bug, { size: 22 }) };
+        default: return { title: "Module Workspace", category: "Academics", subtitle: "Tutor Ward Department Portal", icon: _jsx(Layers, { size: 22 }) };
+    }
+};
+
 function App() {
     const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 992);
     const [isPageLoading, setIsPageLoading] = useState(false);
@@ -764,56 +794,68 @@ function App() {
                             })]
                         }, idx))), _jsxs("footer", { className: "app-global-footer", children: [_jsxs("div", { className: "footer-links-row", children: [_jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('home'), children: "Home" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('academics'), children: "Academics" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('attendance'), children: "Attendance" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('timetable'), children: "Timetable" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('college-rules'), children: "Rules" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('suggestion'), children: "Suggestion Box" }), _jsx("button", { className: "footer-link-btn", onClick: () => handleCardClick('bug-report'), children: "Report Bug" })] }), _jsxs("div", { className: "footer-contact-info", children: [_jsxs("span", { children: ["Developer: ", _jsx("strong", { children: "Nithin Annamalai R" })] }), _jsxs("span", { children: ["Email: ", _jsx("a", { href: "mailto:tutorwardapp@gmail.com", children: "tutorwardapp@gmail.com" })] }), _jsxs("span", { children: ["Phone: ", _jsx("a", { href: "tel:+914222460088", children: "+91 422 246 0088" })] })] }), _jsx("p", { className: "footer-copy-text", children: `\u00A9 ${new Date().getFullYear()} Tutor Ward App \u00B7 Sri Ramakrishna Engineering College \u00B7 Department of EEE. All rights reserved.` })] })]
                     })
-                }))) : (_jsx("div", {
-                    className: "dedicated-page-view page-slide-enter", children: _jsxs("div", {
-                        className: "dedicated-page-body", children: [currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }), currentTab === 'announcements' && (_jsx("div", { style: { background: 'var(--bg-primary)', borderRadius: 16, border: '1px solid var(--card-border)', padding: 16 }, children: _jsx(AnnouncementBanner, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }) })), currentTab === 'profile-details' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }), currentTab === 'profile' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "documents" }), currentTab === 'certificates' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "certificates" }), currentTab === 'request-letters' && _jsx(RequestLetters, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }), currentTab === 'lab-finder' && _jsx(LabSeatFinder, { onBack: handleCloseModal, rollNo: currentUser?.rollNo || '71812503104' }), currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }), currentTab === 'attendance' && _jsx(AttendanceTracker, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'nptel' && _jsx(NptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'academics' && _jsx(AcademicsTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'career' && _jsx(CareerHub, { onBack: handleCloseModal, isAdmin: isAdmin }), currentTab === 'courses' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "courses", initialEditMode: academicInitEdit }), currentTab === 'calendar' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "calendar", initialEditMode: academicInitEdit }), currentTab === 'timetable' && _jsx(Timetable, { onBack: handleCloseModal, isAdmin: isAdmin, semester: 3 }), currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }), currentTab === 'puzzle-games' && _jsx(PuzzleGames, { onBack: handleCloseModal }), currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })), currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'student-manager' && _jsx(StudentManager, { onBack: handleCloseModal, isAdmin: isAdmin, currentUser: currentUser }), currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin }), !['ai', 'announcements', 'profile-details', 'profile', 'certificates', 'request-letters', 'lab-finder', 'cgpa-calc', 'attendance', 'nptel', 'academics', 'career', 'courses', 'calendar', 'timetable', 'tasks', 'puzzle-games', 'suggestion', 'campus-map', 'college-rules', 'faculty', 'student-manager', 'bug-report'].includes(currentTab) && (_jsxs("div", {
-                            className: "not-found-view glass-luxury-card", style: { margin: '24px auto', maxWidth: 500, borderRadius: 28, padding: '36px 28px', border: '1.5px solid rgba(0,82,204,0.15)' }, children: [
-                                _jsx("div", { style: { fontSize: 52, marginBottom: 12, animation: 'floatMist 4s ease-in-out infinite alternate' }, children: "\uD83E\uDDED" }),
-                                _jsx("h2", { style: { fontSize: 22, fontWeight: 900, color: 'var(--text-main)', margin: '0 0 6px 0' }, children: "404 \u00B7 Feature Not Found" }),
-                                _jsxs("p", {
-                                    style: { fontSize: 13, color: 'var(--text-muted)', margin: '0 0 20px 0', lineHeight: 1.5 }, children: [
-                                        "The requested section ",
-                                        _jsxs("strong", { style: { color: 'var(--accent-blue)', background: 'rgba(0,82,204,0.08)', padding: '2px 8px', borderRadius: 6 }, children: ["#", currentTab] }),
-                                        " is either relocated or does not exist."
-                                    ]
-                                }),
-                                _jsx("div", {
-                                    style: { width: '100%', marginBottom: 18 }, children: [
-                                        _jsxs("div", {
-                                            style: { display: 'flex', gap: 8, padding: '8px 12px', background: 'var(--bg-secondary)', borderRadius: 12, border: '1px solid var(--card-border)' }, children: [
-                                                _jsx(Search, { size: 16, style: { color: 'var(--text-muted)' } }),
-                                                _jsx("input", {
-                                                    type: "text",
-                                                    placeholder: "Search available modules (e.g. attendance)...",
-                                                    value: searchQuery,
-                                                    onChange: e => setSearchQuery(e.target.value),
-                                                    onKeyDown: e => {
-                                                        if (e.key === 'Enter' && searchResults.length > 0) {
-                                                            handleCardClick(searchResults[0].key);
-                                                        }
-                                                    },
-                                                    style: { border: 'none', background: 'transparent', outline: 'none', fontSize: 12.5, width: '100%', color: 'var(--text-main)' }
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }, children: "Quick Jump Destinations" }),
-                                _jsxs("div", {
-                                    style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, width: '100%', marginBottom: 20 }, children: [
-                                        _jsxs("button", { onClick: () => handleCardClick('home'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#1d4ed8', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(Home, { size: 15 }), " Home Hub"] }),
-                                        _jsxs("button", { onClick: () => handleCardClick('academics'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(GraduationCap, { size: 15 }), " Academics"] }),
-                                        _jsxs("button", { onClick: () => handleCardClick('attendance'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fed7aa', background: '#fff7ed', color: '#c2410c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(UserCheck, { size: 15 }), " Attendance"] }),
-                                        _jsxs("button", { onClick: () => handleCardClick('bug-report'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fecaca', background: '#fef2f2', color: '#b91c1c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(FileText, { size: 15 }), " Report Issue"] })
-                                    ]
-                                }),
-                                _jsx("button", { className: "cta-button", onClick: () => handleCardClick('home'), style: { width: '100%' }, children: "Return to Dashboard" })
-                            ]
-                        }))]
+                }))) : (() => {
+                    const tabMeta = getTabMetadata(currentTab);
+                    const tabBody = [currentTab === 'ai' && _jsx(AIChatbot, { isFullPage: true }), currentTab === 'announcements' && (_jsx("div", { style: { background: 'var(--bg-primary)', borderRadius: 16, border: '1px solid var(--card-border)', padding: 16 }, children: _jsx(AnnouncementBanner, { announcements: announcements, isAdmin: isAdmin, onAddAnnouncement: handleAddAnnouncement, onDeleteAnnouncement: handleDeleteAnnouncement }) })), currentTab === 'profile-details' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "profile", currentUser: currentUser, onUpdateUser: (updated) => setCurrentUser(updated) }), currentTab === 'profile' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "documents" }), currentTab === 'certificates' && _jsx(ProfileDocs, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal, mode: "certificates" }), currentTab === 'request-letters' && _jsx(RequestLetters, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'student@eee.com', currentName: currentUser?.name || 'Nithin Annamalai', currentRollNo: currentUser?.rollNo || '71812503104', isAdmin: isAdmin }), currentTab === 'lab-finder' && _jsx(LabSeatFinder, { onBack: handleCloseModal, rollNo: currentUser?.rollNo || '71812503104' }), currentTab === 'cgpa-calc' && _jsx(GpaCalculator, { onBack: handleCloseModal }), currentTab === 'attendance' && _jsx(AttendanceTracker, { currentStudentRollNo: currentUser?.rollNo || '71812503104', currentUserName: currentUser?.name || 'Nithin Annamalai', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'nptel' && _jsx(NptelTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'academics' && _jsx(AcademicsTracker, { currentEmail: currentUser?.email || 'student@eee.com', isAdmin: isAdmin, onBack: handleCloseModal }), currentTab === 'career' && _jsx(CareerHub, { onBack: handleCloseModal, isAdmin: isAdmin }), currentTab === 'courses' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "courses", initialEditMode: academicInitEdit }), currentTab === 'calendar' && _jsx(AcademicCalendar, { onBack: handleCloseModal, isAdmin: isAdmin, viewMode: "calendar", initialEditMode: academicInitEdit }), currentTab === 'timetable' && _jsx(Timetable, { onBack: handleCloseModal, isAdmin: isAdmin, semester: 3 }), currentTab === 'tasks' && _jsx(TaskList, { onBack: handleCloseModal, currentEmail: currentUser?.email || 'user' }), currentTab === 'puzzle-games' && _jsx(PuzzleGames, { onBack: handleCloseModal }), currentTab === 'suggestion' && (_jsx(SuggestionBox, { onClose: handleCloseModal, userName: currentUser?.name || 'Guest' })), currentTab === 'campus-map' && _jsx(CampusMapPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'college-rules' && _jsx(CollegeRulesPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'faculty' && _jsx(FacultyPanel, { onClose: handleCloseModal, isAdmin: isAdmin }), currentTab === 'student-manager' && _jsx(StudentManager, { onBack: handleCloseModal, isAdmin: isAdmin, currentUser: currentUser }), currentTab === 'bug-report' && _jsx(BugReport, { onBack: handleCloseModal, currentUser: currentUser, isAdmin: isAdmin }), !['ai', 'announcements', 'profile-details', 'profile', 'certificates', 'request-letters', 'lab-finder', 'cgpa-calc', 'attendance', 'nptel', 'academics', 'career', 'courses', 'calendar', 'timetable', 'tasks', 'puzzle-games', 'suggestion', 'campus-map', 'college-rules', 'faculty', 'student-manager', 'bug-report'].includes(currentTab) && (_jsxs("div", {
+                        className: "not-found-view glass-luxury-card", style: { margin: '24px auto', maxWidth: 500, borderRadius: 28, padding: '36px 28px', border: '1.5px solid rgba(0,82,204,0.15)' }, children: [
+                            _jsx("div", { style: { fontSize: 52, marginBottom: 12, animation: 'floatMist 4s ease-in-out infinite alternate' }, children: "\uD83E\uDDED" }),
+                            _jsx("h2", { style: { fontSize: 22, fontWeight: 900, color: 'var(--text-main)', margin: '0 0 6px 0' }, children: "404 \u00B7 Feature Not Found" }),
+                            _jsxs("p", {
+                                style: { fontSize: 13, color: 'var(--text-muted)', margin: '0 0 20px 0', lineHeight: 1.5 }, children: [
+                                    "The requested section ",
+                                    _jsxs("strong", { style: { color: 'var(--accent-blue)', background: 'rgba(0,82,204,0.08)', padding: '2px 8px', borderRadius: 6 }, children: ["#", currentTab] }),
+                                    " is either relocated or does not exist."
+                                ]
+                            }),
+                            _jsx("div", {
+                                style: { width: '100%', marginBottom: 18 }, children: [
+                                    _jsxs("div", {
+                                        style: { display: 'flex', gap: 8, padding: '8px 12px', background: 'var(--bg-secondary)', borderRadius: 12, border: '1px solid var(--card-border)' }, children: [
+                                            _jsx(Search, { size: 16, style: { color: 'var(--text-muted)' } }),
+                                            _jsx("input", {
+                                                type: "text",
+                                                placeholder: "Search available modules (e.g. attendance)...",
+                                                value: searchQuery,
+                                                onChange: e => setSearchQuery(e.target.value),
+                                                onKeyDown: e => {
+                                                    if (e.key === 'Enter' && searchResults.length > 0) {
+                                                        handleCardClick(searchResults[0].key);
+                                                    }
+                                                },
+                                                style: { border: 'none', background: 'transparent', outline: 'none', fontSize: 12.5, width: '100%', color: 'var(--text-main)' }
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }),
+                            _jsx("div", { style: { fontSize: 11, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }, children: "Quick Jump Destinations" }),
+                            _jsxs("div", {
+                                style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, width: '100%', marginBottom: 20 }, children: [
+                                    _jsxs("button", { onClick: () => handleCardClick('home'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#1d4ed8', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(Home, { size: 15 }), " Home Hub"] }),
+                                    _jsxs("button", { onClick: () => handleCardClick('academics'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(GraduationCap, { size: 15 }), " Academics"] }),
+                                    _jsxs("button", { onClick: () => handleCardClick('attendance'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fed7aa', background: '#fff7ed', color: '#c2410c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(UserCheck, { size: 15 }), " Attendance"] }),
+                                    _jsxs("button", { onClick: () => handleCardClick('bug-report'), className: "glass-hover-card", style: { padding: '10px 12px', borderRadius: 12, border: '1px solid #fecaca', background: '#fef2f2', color: '#b91c1c', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }, children: [_jsx(FileText, { size: 15 }), " Report Issue"] })
+                                ]
+                            }),
+                            _jsx("button", { className: "cta-button", onClick: () => handleCardClick('home'), style: { width: '100%' }, children: "Return to Dashboard" })
+                        ]
+                    }))
+                ];
+                return isDesktop ? (
+                    _jsx(DesktopPageWrapper, {
+                        title: tabMeta.title,
+                        category: tabMeta.category,
+                        subtitle: tabMeta.subtitle,
+                        icon: tabMeta.icon,
+                        onBack: handleCloseModal,
+                        children: tabBody
                     })
-                }))
-            }), isPageLoading && _jsx(LoadingScreen, { message: "Transitioning workspace..." }), currentTab !== 'ai' && _jsx(AIChatbot, {}), _jsxs("nav", { className: "mobile-bottom-nav", children: [_jsxs("button", { className: `bottom-tab-item ${activeBottomNav === 'home' && currentTab === null ? 'active' : ''}`, onClick: () => { setActiveBottomNav('home'); setCurrentTab(null); }, children: [_jsx(Home, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Home" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'academics' || currentTab === 'courses' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('academics'); handleCardClick('academics'); }, children: [_jsx(GraduationCap, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Academics" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'attendance' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('attendance'); handleCardClick('attendance'); }, children: [_jsx(UserCheck, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Attendance" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'puzzle-games' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('puzzle-games'); handleCardClick('puzzle-games'); }, children: [_jsx(Gamepad2, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Mind Games" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'profile-details' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('profile'); handleCardClick('profile-details'); }, children: [_jsx(User, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Profile" })] })] }), showSignInPage && (_jsx(SignInPage, { onClose: () => setShowSignInPage(false), onLoginSuccess: handleLoginSuccess, initialIsSignUp: authIsSignUp }))]
-        })]
+                ) : (
+                    _jsx("div", { className: "dedicated-page-view page-slide-enter", children: _jsx("div", { className: "dedicated-page-body", children: tabBody }) })
+                );
+            })()
+            }), isPageLoading && _jsx(LoadingScreen, { message: "Transitioning workspace..." }), currentTab !== 'ai' && _jsx(AIChatbot, {}), !isDesktop && _jsxs("nav", { className: "mobile-bottom-nav", children: [_jsxs("button", { className: `bottom-tab-item ${activeBottomNav === 'home' && currentTab === null ? 'active' : ''}`, onClick: () => { setActiveBottomNav('home'); setCurrentTab(null); }, children: [_jsx(Home, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Home" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'academics' || currentTab === 'courses' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('academics'); handleCardClick('academics'); }, children: [_jsx(GraduationCap, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Academics" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'attendance' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('attendance'); handleCardClick('attendance'); }, children: [_jsx(UserCheck, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Attendance" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'puzzle-games' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('puzzle-games'); handleCardClick('puzzle-games'); }, children: [_jsx(Gamepad2, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Mind Games" })] }), _jsxs("button", { className: `bottom-tab-item ${currentTab === 'profile-details' ? 'active' : ''}`, onClick: () => { setActiveBottomNav('profile'); handleCardClick('profile-details'); }, children: [_jsx(User, { size: 20 }), _jsx("span", { className: "bottom-tab-label", children: "Profile" })] })] }), showSignInPage && (_jsx(SignInPage, { onClose: () => setShowSignInPage(false), onLoginSuccess: handleLoginSuccess, initialIsSignUp: authIsSignUp }))]
+})]
     }));
 }
 // ── Suggestion Box Panel ──────────────────────────────
