@@ -432,6 +432,7 @@ export const ProfileDocs = ({ currentEmail, isAdmin, onBack, mode = 'documents',
                         
                         // ── LUXURY INTERACTIVE SUB-TABS ──
                         _jsxs("div", { 
+                            className: "profile-subtabs-row",
                             style: {
                                 display: 'grid',
                                 gridTemplateColumns: 'repeat(4, 1fr)',
@@ -559,7 +560,7 @@ export const ProfileDocs = ({ currentEmail, isAdmin, onBack, mode = 'documents',
                                             ] }),
 
                                             // Student Avatar & Details Grid
-                                            _jsxs("div", { style: { display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 16, alignItems: 'center', marginBottom: 18 }, children: [
+                                            _jsxs("div", { className: "smart-pass-avatar-grid", style: { display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 16, alignItems: 'center', marginBottom: 18 }, children: [
                                                 // Avatar with Metallic Glow
                                                 _jsxs("div", { style: { position: 'relative' }, children: [
                                                     _jsx("div", { 
@@ -655,7 +656,7 @@ export const ProfileDocs = ({ currentEmail, isAdmin, onBack, mode = 'documents',
                                     }),
 
                                     // ── 4 LUXURY KPI STATS ──
-                                    _jsxs("div", { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }, children: [
+                                    _jsxs("div", { className: "profile-kpi-grid", style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }, children: [
                                         _jsxs("div", { 
                                             style: {
                                                 background: '#ffffff',
