@@ -1,1 +1,433 @@
-/* Cleared for custom index.css */
+/* ==========================================================================
+   ✨ TUTOR WARD APP - MASTER ANIMATIONS & GLASSMORPHISM DESIGN SYSTEM
+   Sri Ramakrishna Engineering College · Department of EEE
+   ========================================================================== */
+
+/* ── 1. GLOBAL SMOOTH RENDERING & CUSTOM SCROLLBAR ── */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 82, 204, 0.3) 0%, rgba(16, 185, 129, 0.3) 100%);
+  border-radius: 99px;
+  backdrop-filter: blur(8px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0052cc 0%, #059669 100%);
+}
+
+/* ── 2. PAGE SWITCH & DEDICATED VIEW ENTRANCE ANIMATIONS ── */
+.dedicated-page-view,
+.page-slide-enter,
+.page-switch-container {
+  animation: pageSlideUpFluid 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+@keyframes pageSlideUpFluid {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.988);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.home-dashboard-view {
+  animation: homeFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes homeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 3. LUXURY GLASSMORPHISM UTILITIES ── */
+.glass-panel-luxury {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 10px 36px rgba(0, 82, 204, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* ── 4. MOBILE TOP BAR & BOTTOM DOCK LIQUID GLASS ── */
+.mobile-top-bar {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  transition: all 0.3s ease;
+}
+
+.mobile-bottom-nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.06) !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 100 !important;
+}
+
+.bottom-tab-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.bottom-tab-item:active {
+  transform: scale(0.88);
+}
+
+.bottom-tab-item.active {
+  transform: translateY(-3px);
+}
+
+.bottom-tab-item.active svg {
+  filter: drop-shadow(0 4px 10px rgba(0, 82, 204, 0.45));
+  animation: tabBouncePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bottom-tab-item.active::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 18px;
+  height: 3px;
+  background: #0052cc;
+  border-radius: 99px;
+  animation: tabIndicatorSlide 0.3s ease-out forwards;
+}
+
+@keyframes tabBouncePop {
+  0% { transform: scale(0.75); }
+  50% { transform: scale(1.24); }
+  100% { transform: scale(1); }
+}
+
+@keyframes tabIndicatorSlide {
+  from { width: 0; opacity: 0; }
+  to { width: 18px; opacity: 1; }
+}
+
+/* ── 5. CARD HOVER SPRINGS, 3D PERSPECTIVE & SPECULAR SHIMMER ── */
+.mobile-app-tile,
+.mobile-feature-card,
+.visiona-kpi-card,
+.category-folder-card,
+.quick-module-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  will-change: transform, box-shadow;
+}
+
+.mobile-app-tile:hover {
+  transform: translateY(-4px) scale(1.035);
+  box-shadow: 0 12px 28px rgba(0, 82, 204, 0.15), 0 0 0 1.5px rgba(0, 82, 204, 0.35) !important;
+  z-index: 2;
+}
+
+.mobile-app-tile:active {
+  transform: scale(0.94);
+  transition-duration: 0.1s !important;
+}
+
+.mobile-tile-icon {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-app-tile:hover .mobile-tile-icon {
+  transform: scale(1.15) rotate(4deg);
+}
+
+/* Specular Shimmer on Category Folder Cards */
+.category-folder-card {
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04) !important;
+}
+
+.category-folder-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-folder-card:hover::before {
+  opacity: 1;
+  animation: specularSweep 1s ease-in-out;
+}
+
+@keyframes specularSweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(300%) skewX(-20deg); }
+}
+
+/* ── 6. BUTTON MICRO-INTERACTIONS & GLOW FEEDBACK ── */
+.cta-button,
+.btn-primary,
+.mobile-blue-pill-btn,
+.cosmic-login-submit-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 0 4px 16px rgba(0, 82, 204, 0.25);
+}
+
+.cta-button:hover,
+.btn-primary:hover,
+.mobile-blue-pill-btn:hover,
+.cosmic-login-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 82, 204, 0.38) !important;
+  filter: brightness(1.05);
+}
+
+.cta-button:active,
+.btn-primary:active,
+.mobile-blue-pill-btn:active,
+.cosmic-login-submit-btn:active {
+  transform: scale(0.96) !important;
+}
+
+/* Secondary Button Springs */
+.btn-secondary,
+.mobile-outline-pill-btn,
+.cosmic-back-btn {
+  transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.btn-secondary:hover,
+.mobile-outline-pill-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 82, 204, 0.08) !important;
+  border-color: var(--accent-blue) !important;
+}
+
+.btn-secondary:active,
+.mobile-outline-pill-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── 7. FORM INPUT FOCUS GLOW RINGS ── */
+.form-input,
+.form-textarea,
+.form-select,
+.mobile-underlined-input,
+.cosmic-input {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: #0052cc !important;
+  box-shadow: 0 0 0 3.5px rgba(0, 82, 204, 0.16) !important;
+  transform: translateY(-1px);
+}
+
+.mobile-underlined-input:focus {
+  border-bottom-color: #0052cc !important;
+  box-shadow: 0 3px 0 0 #0052cc !important;
+  transform: translateY(-1px);
+}
+
+.cosmic-input:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 3.5px rgba(56, 189, 248, 0.25) !important;
+}
+
+/* ── 8. STATUS BADGE PULSES & NOTIFICATION DOTS ── */
+.notification-badge {
+  animation: badgePulsing 1.8s infinite;
+}
+
+@keyframes badgePulsing {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.badge-approved {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  font-weight: 800;
+  border: 1px solid #bbf7d0;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.badge-pending {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  font-weight: 800;
+  border: 1px solid #fde68a;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ── 9. DESKTOP VISIONOS DASHBOARD AMBIENT ORBS ── */
+.visiona-dashboard-canvas {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+}
+
+.visiona-dashboard-canvas::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientOrbFloat 14s ease-in-out infinite alternate;
+}
+
+.visiona-dashboard-canvas::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 20%;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientOrbFloat 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes ambientOrbFloat {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(35px, 25px); }
+}
+
+.visiona-kpi-card {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.visiona-kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08) !important;
+}
+
+.quick-module-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 10px 24px rgba(0, 82, 204, 0.14) !important;
+}
+
+.quick-module-btn:active {
+  transform: scale(0.95);
+}
+
+/* ── 10. MODAL POP SPRING ENTRANCE ── */
+.poster-modal {
+  animation: modalOverlayFade 0.25s ease-out forwards;
+}
+
+.poster-content {
+  animation: modalCardPop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalOverlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalCardPop {
+  0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── 11. ICON BUTTONS HOVER ── */
+.icon-circle-btn,
+.hamburger-btn,
+.avatar-btn {
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.icon-circle-btn:hover,
+.hamburger-btn:hover {
+  transform: scale(1.12);
+  background: rgba(0, 82, 204, 0.1) !important;
+}
+
+.icon-circle-btn:active,
+.hamburger-btn:active {
+  transform: scale(0.92);
+}
+
+.avatar-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px rgba(0, 82, 204, 0.3);
+}
+
+/* ── 12. DRAWER SIDEBAR SMOOTH SLIDE ── */
+.mobile-drawer-sheet {
+  animation: drawerSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes drawerSlideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Footer Link Hover Glow */
+.footer-link-btn {
+  transition: all 0.2s ease !important;
+}
+
+.footer-link-btn:hover {
+  color: #0052cc !important;
+  transform: translateY(-1px);
+}
